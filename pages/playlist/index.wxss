@@ -1,0 +1,156 @@
+/* pages/songListDetail/index.wxss */
+
+.songlist-header {
+  position: relative;
+  padding: 60rpx 20rpx 30rpx;
+  overflow: hidden;
+}
+
+.slhead-bg, .slhead-bg::after {
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1;
+}
+
+.slhead-bg::after {
+  content: '';
+  background-color: rgba(0, 0, 0, 0.25);
+}
+
+.slhead-bg {
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: 50%;
+  -webkit-filter: blur(20px);
+  filter: blur(20px);
+  -webkit-transform: scale(1.5);
+  transform: scale(1.5);
+}
+
+.slhead-wrap {
+  display: flex;
+  position: relative;
+  z-index: 2;
+}
+
+.slhead-img {
+  width: 200rpx;
+  height: 200rpx;
+}
+
+.slhead-img image {
+  width: 100%;
+  vertical-align: middle;
+  border-radius: 6rpx;
+}
+
+.slhead-txt {
+  padding-left: 20rpx;
+  -webkit-box-flex: 1;
+  -webkit-flex: 1 1 auto;
+  flex: 1 1 auto;
+  width: 1%;
+}
+
+.slhead-txt .txt-title {
+  margin-top: 10rpx;
+  font-size: 32rpx;
+  color: #fff;
+}
+
+.slhead-txt .txt-name {
+  margin-top: 20rpx;
+  font-size: 28rpx;
+  color: #fff;
+}
+
+.slhead-txt .txt-auth {
+  margin-top: 30rpx;
+  display: block;
+  font-size: 28rpx;
+  color: hsla(0, 0%, 100%, 0.7);
+}
+.slhead-txt .txt-auth image {
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 10rpx;
+  width: 60rpx;
+  height: 60rpx;
+  border-radius: 50%;
+}
+
+.slhead-options {
+  margin-top: 40rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.slhead-options .option-item {
+  position: relative;
+  z-index: 2;
+  flex: 1;
+}
+
+.slhead-options .option-item image {
+  width: 100rpx;
+  height: 100rpx;
+  background-color: #000;
+}
+
+.slhead-options .option-item text {
+  display: block;
+  font-size: 24rpx;
+  color: #fff;
+}
+
+.play-list {
+}
+
+.play-item, .item-number, .item-wrap {
+  display: flex;
+}
+
+.play-item .item-number {
+  width: 80rpx;
+  align-items: center;
+  justify-content: center;
+  font-size: 34rpx;
+  color: #999;
+}
+
+.play-item .item-wrap, .play-item .wrap-info {
+  flex: 1 1 auto;
+}
+
+.play-item .item-wrap {
+  border-bottom: 2rpx solid rgba(0, 0, 0, 0.1);
+}
+
+.play-item .wrap-info {
+  padding: 12rpx 0;
+  width: 0;
+}
+
+.play-item .song-name {
+  display: block;
+  font-size: 34rpx;
+}
+
+.play-item .song-copyright {
+  display: block;
+  font-size: 24rpx;
+  color: #888;
+}
+
+.play-item .wrap-actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 20rpx;
+  font-size: 28rpx;
+}

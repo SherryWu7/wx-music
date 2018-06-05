@@ -1,0 +1,46 @@
+<!--pages/song/index.wxml-->
+<view class='song-bg' style='background-image: url("//music.163.com/api/img/blur/{{detail.al.pic_str || detail.al.pic}}"); opacity: 1'></view>
+<view class='song-player' bindtap='play'>
+  <view class='song-disc'>
+    <view class='song-turn'>
+      <view class='song-cover song-circling {{ playStatus===1 ? "running" : "paused" }}'>
+        <image src='{{detail.al.picUrl}}' mode="widthFix"></image>
+      </view>
+    </view>
+  </view>
+</view>
+<view class='song-progress'>
+  <text class='cur-time'>{{currentTime}}</text>
+  <slider style='width: 100%;' value="{{sliderValue}}" min="0" max="{{sliderMax}}" block-size="12" activeColor="#d33a31" backgroundColor="rgba(255, 255, 255, 0.2)" block-color="#fff" bindchange="sliderChange" bindtouchstart='sliderMoveStart' bindtouchmove='sliderMoveEnd'
+  />
+  <text class='total-time'>{{totalTime}}</text>
+</view>
+<view class='song-action'>
+  <icon class="iconfont {{modeList[curModeIndex].icon}}" bindtap='modeChange' />
+  <icon class="iconfont icon-pre" id='-1' bindtap='playSongChange' />
+  <icon class="iconfont {{ playStatus=== 0 ? 'icon-play ' : 'icon-paused' }}" bindtap='playStatusChange' />
+  <icon class="iconfont icon-next" id='1' bindtap='playSongChange' />
+  <icon class="iconfont icon-songlist" bindtap='showSongList' />
+</view>
+<drawer id="drawer" bind:cancel="_cancelDrawer" bind:confirm="_confirmDrawer">
+  <view>
+    <view class='pl-action-panel'>
+      <view>
+        <icon class="iconfont {{modeList[curModeIndex].icon}}" bindtap='modeChange' />
+        <text>{{modeList[curModeIndex].name}}</text>
+      </view>
+      <view>
+
+      </view>
+    </view>
+    <block wx:for="{{songList}}" wx:key="{{index}}">
+      <view class='pl-item'>
+        <view class='ellipsis'>
+          <text class='songname'>{{item.name}}{{item.alia.length ? '('+item.alia[0] +')' : ''}}</text>
+          <text class='singer'> - {{item.ar[0].name}}</text>
+        </view>
+        <view></view>
+      </view>
+    </block>
+  </view>
+</drawer>

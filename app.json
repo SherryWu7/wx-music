@@ -1,0 +1,52 @@
+{
+  "pages": [
+    "pages/discover/index",
+    "pages/index/index",
+    "pages/logs/logs",
+    "pages/songlist/index",
+    "pages/playlist/index",
+    "pages/comments/index",
+    "pages/song/index"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#d43c33",
+    "navigationBarTitleText": "网易云音乐",
+    "navigationBarTextStyle": "white"
+  },
+  "tabBar": {
+    "selectedColor": "#d33a31",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "发现",
+        "iconPath": "images/icon-qn.png",
+        "selectedIconPath": "images/icon-qn.png"
+      },
+      {
+        "pagePath": "pages/index/index",
+        "text": "视频",
+        "iconPath": "images/icon-qn.png",
+        "selectedIconPath": "images/icon-qn.png"
+      },
+      {
+        "pagePath": "pages/index/index",
+        "text": "我的",
+        "iconPath": "images/icon-qn.png",
+        "selectedIconPath": "images/icon-qn.png"
+      },
+      {
+        "pagePath": "pages/index/index",
+        "text": "朋友",
+        "iconPath": "images/icon-qn.png",
+        "selectedIconPath": "images/icon-qn.png"
+      },
+      {
+        "pagePath": "pages/index/index",
+        "text": "账号",
+        "iconPath": "images/icon-qn.png",
+        "selectedIconPath": "images/icon-qn.png"
+      }
+    ]
+  }
+}

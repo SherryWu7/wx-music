@@ -1,0 +1,65 @@
+{
+	"description": "项目配置文件。",
+	"packOptions": {
+		"ignore": []
+	},
+	"setting": {
+		"urlCheck": false,
+		"es6": true,
+		"postcss": true,
+		"minified": true,
+		"newFeature": true
+	},
+	"compileType": "miniprogram",
+	"libVersion": "2.0.8",
+	"appid": "wx1bda06b29a35e845",
+	"projectname": "music",
+	"isGameTourist": false,
+	"condition": {
+		"search": {
+			"current": -1,
+			"list": []
+		},
+		"conversation": {
+			"current": -1,
+			"list": []
+		},
+		"plugin": {
+			"current": -1,
+			"list": []
+		},
+		"game": {
+			"currentL": -1,
+			"list": []
+		},
+		"miniprogram": {
+			"current": 3,
+			"list": [
+				{
+					"id": 0,
+					"name": "歌单",
+					"pathName": "pages/songlist/index",
+					"query": ""
+				},
+				{
+					"id": 1,
+					"name": "歌单详情",
+					"pathName": "pages/playlist/index",
+					"query": "id=2239642434"
+				},
+				{
+					"id": -1,
+					"name": "评论",
+					"pathName": "pages/comments/index",
+					"query": "id=2239642434"
+				},
+				{
+					"id": -1,
+					"name": "播放",
+					"pathName": "pages/song/index",
+					"query": "id=72408"
+				}
+			]
+		}
+	}
+}

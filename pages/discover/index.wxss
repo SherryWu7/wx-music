@@ -1,0 +1,118 @@
+/* pages/discover/index.wxss */
+
+view, text {
+  box-sizing: border-box;
+}
+
+.top-nav {
+  display: flex;
+  color: #fff;
+  background-color: #d43c33;
+}
+
+.top-nav-item {
+  flex: 1;
+  padding: 15rpx 0;
+  text-align: center;
+  font-size: 28rpx;
+}
+
+.top-nav-item.selected {
+  font-weight: 700;
+}
+
+.top-nav-item.selected::after {
+  content: '';
+  display: block;
+  position: absolute;
+  border-top: 2rpx solid #fff;
+}
+
+.slide-container {
+  position: relative;
+}
+
+.slide-bg {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 70%;
+  background-color: #d43c33;
+}
+
+.slide {
+  height: 336rpx;
+  margin: 0 10rpx;
+}
+
+.slide-image {
+  width: 100%;
+  height: 100%;
+  border-radius: 4rpx;
+}
+
+.recommend-menu {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  border-bottom: 1rpx solid #eee;
+}
+
+.recommend-menu .menu-item {
+  flex: 1;
+  padding: 15rpx 0;
+  text-align: center;
+  font-size: 26rpx;
+}
+
+.recommend-menu .menu-item image {
+  width: 160rpx;
+  height: 160rpx;
+  margin: auto;
+  display: block;
+}
+
+.recommend-list .title {
+  padding: 15rpx 20rpx;
+  font-size: 30rpx;
+}
+
+.component-music-list {
+  width: 100%;
+  padding: 0 15rpx;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.music-list-item {
+  width: 33.3%;
+  padding: 0 5rpx;
+  margin-bottom: 15rpx;
+}
+
+.remd-img {
+  position: relative;
+}
+
+.remd-img image {
+  width: 100%;
+  border-radius: 4rpx;
+}
+
+.music-list-item-desc .songName {
+  font-size: 26rpx;
+}
+
+.music-list-item-desc .singer {
+  font-size: 24rpx;
+  color: #888;
+}
+
+.music-list-item-desc .singer, .music-list-item-desc .songName {
+  display: block;
+  width: 100%;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}

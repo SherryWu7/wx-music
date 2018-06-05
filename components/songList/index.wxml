@@ -1,0 +1,18 @@
+<!--components/songList/index.wxml-->
+<wxs src="../../utils/util.wxs" module="util"></wxs>
+<view class='song-list'>
+  <block wx:for="{{list}}" wx:key="{{index}}">
+    <view class='song-list-item' style='width: {{ 100 / itemCount }}%'>
+      <view class='remd-img'>
+        <image src="{{item.coverImgUrl}}" mode="widthFix" lazy-load="{{true}}"></image>
+        <view class='play-count'>
+          <text class='count'>{{util.formatPlayCount(item.playCount)}}</text>
+        </view>
+        <view class='nick-name'>
+          <text>{{item.creator.nickname}}</text>
+        </view>
+      </view>
+      <view class='item-name'>{{item.name}}</view>
+    </view>
+  </block>
+</view>

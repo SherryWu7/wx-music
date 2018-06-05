@@ -1,0 +1,52 @@
+<!--pages/comments/index.wxml-->
+<template name="commentTpl">
+  <view class='comments'>
+    <view class='cmt-title' id="comments{{type}}" style='{{ status ? "position: fixed; width: 100%; left: 0; top:0":""}}'>{{title}}</view>
+    <view class='cmt-list'>
+      <block wx:for="{{list}}" wx:key="{{index}}">
+        <view class='cmt-item'>
+          <view class='cmt-head'>
+            <navigator>
+              <image src="{{item.user.avatarUrl}}"></image>
+            </navigator>
+          </view>
+          <view class='cmt-wrap'>
+            <view class='cmt-info'>
+              <view class='cmt-meta'>
+                <text class='cmt-user ellipsis'>{{item.user.nickname}}</text>
+                <text class='cmt-time'>{{item.time}}</text>
+              </view>
+              <view class='cmt-like'>{{item.likedCount}}</view>
+            </view>
+            <view class='cmt-content'>
+              <text class='cmt-txt'>{{item.content}}</text>
+            </view>
+            <view class='cmt-replied' wx:if="{{item.beReplied.length > 0}}">
+              <view class='cmt-replied-user'>
+                <navigator url=''>@{{item.beReplied[0].user.nickname}}：</navigator>
+              </view>
+              <text class='cmt-replied-cnt'>{{item.beReplied[0].content}}</text>
+            </view>
+          </view>
+        </view>
+      </block>
+    </view>
+  </view>
+</template>
+
+<navigator hover-class="none" class='sl-detail' url='/pages/playlist/index?id={{detail.id}}'>
+  <view class='sl-img'>
+    <image src='{{detail.coverImgUrl}}' mode="widthFix"></image>
+  </view>
+  <view class='sl-txt'>
+    <view class='txt-title'>
+      <text class='title-tag'>歌单</text>{{detail.name}}
+    </view>
+    <navigator class='txt-auth' hover-class="none">
+      by
+      <text>{{detail.nickname}}</text>
+    </navigator>
+  </view>
+</navigator>
+<template is="commentTpl" data="{{list: hotComments, title: '精彩评论', type: 'Hot', status: titleFixed}}" />
+<template is="commentTpl" data="{{list: comments, title: '最新评论(' + totalCount + ')' ,type: 'New' }}" />

@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "歌单",
+  "usingComponents": {
+    "song-list": "/components/songList/index",
+    "drawer": "/components/Drawer/index"
+  }
+}

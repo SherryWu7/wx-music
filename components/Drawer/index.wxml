@@ -1,0 +1,5 @@
+<!--components/Drawer/index.wxml-->
+<view class='drawer-screen' wx:if="{{isShow}}" bindtap='_cancel'></view>
+<view animation="{{animationData}}" class='drawer' wx:if="{{isShow}}">
+  <slot></slot>
+</view>

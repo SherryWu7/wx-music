@@ -1,0 +1,16 @@
+var formatPlayCount = function (count) {
+  var minNumber = 99999;
+  var maxNumber = 99999999
+  var formatCount = count;
+  if (count && count > minNumber) { // 10万或10万以上
+    formatCount = (count / 10000).toFixed(1) + '万';
+    if (count > maxNumber){
+      formatCount = (count / 100000000).toFixed(1) + '亿';
+    }
+  }
+  return formatCount;
+}
+
+module.exports = {
+  formatPlayCount: formatPlayCount,
+}

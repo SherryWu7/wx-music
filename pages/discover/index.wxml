@@ -1,0 +1,48 @@
+<!--pages/discover/index.wxml-->
+<view>
+  <view class='top-nav'>
+    <view class='top-nav-item selected'>个性推荐</view>
+    <view class='top-nav-item'>主播电台</view>
+  </view>
+  <view class='slide-container'>  <!--banner-->
+    <view class='slide-bg'></view>
+    <swiper indicator-dots="{{indicatorDots}}"
+      autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" class='slide'>
+      <block wx:for="{{banners}}" wx:key="{{index}}">
+        <swiper-item>
+          <image src="{{item.picUrl}}" class="slide-image" mode="widthFix"/>
+        </swiper-item>
+      </block>
+    </swiper>
+  </view>
+  <view class='recommend-menu'>  <!--推荐菜单-->
+    <block wx:for="{{recommendList}}" wx:key="{{index}}">
+      <navigator class='menu-item' url='{{item.url}}'>
+        <image src="{{item.icon}}"></image>
+        <text>{{item.name}}</text>
+      </navigator>
+    </block>
+  </view>
+
+  <view class='recommend-list'>
+    <view class='title'>推荐歌单 ></view>
+    <song-list list="{{recommendSonglist}}"></song-list>
+  </view>
+
+  <view class='recommend-list'>
+    <view class='title'>最新音乐 ></view>
+    <view class='component-music-list'>
+      <block wx:for="{{newMusicList}}" wx:key="{{index}}" wx:if="{{index<6}}">
+        <view class='music-list-item'>
+          <view class='remd-img'>
+            <image src="{{item.song.album.picUrl}}" mode="widthFix"></image>
+          </view>
+          <view class='music-list-item-desc'>
+          <text class='songName'>{{item.name}}</text>
+          <text class='singer'>{{item.song.artists[0].name }}</text>
+          </view>
+        </view>
+      </block>
+    </view>
+  </view>
+</view>

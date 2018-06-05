@@ -1,0 +1,40 @@
+<!--pages/songList/index.wxml-->
+<wxs src="../../utils/util.wxs" module="util"></wxs>
+<view>
+  <view class='songlist-header'>
+    <view class='slhead-bg' style='background-image: url({{highqualityTop.coverImgUrl}})'></view>
+    <view class='slhead-wrap'>
+      <view class='slhead-img'>
+        <image src='{{highqualityTop.coverImgUrl}}' mode="widthFix"></image>
+      </view>
+      <view class='slhead-txt'>
+        <view class='txt-title'>精品歌单 ></view>
+        <text  class='txt-name'>{{highqualityTop.name}}</text>
+        <text  class='txt-copywriter'>{{highqualityTop.copywriter}}</text>
+      </view>
+    </view>
+  </view>
+  <view style='padding: 15rpx 10rpx;'>
+    <view class='song-list-filter'>
+      <view class='select-classify' bindtap='selectClassify'>{{filter.cat}} ></view>
+    </view>
+  </view>
+  <song-list list="{{songList}}" item-count="2"></song-list>
+</view>
+<drawer id="drawer" bind:cancel="_cancelDrawer" bind:confirm="_confirmDrawer">
+  <view>
+  </view>
+  <block wx:for="{{catObject.categories}}" wx:key="{{index}}">
+    <view style='background-color: #eee; height: 16rpx'></view>
+    <view class='cat'>
+      <view class='cat-item cat-topclass'>
+        <view> {{item.name}}</view>
+      </view>
+      <block wx:for="{{item.subList}}" wx:for-index="childIdx" wx:for-item="child" wx:key="{{childIdx}}">
+        <view class='cat-item cat-subclass'>
+          <view bindtap='selectedCat' data-name='{{child.name}}' class="{{ child.name === filter.cat ? 'selected' : ''}}">{{child.name}}</view>
+        </view>
+      </block>
+    </view>
+  </block>
+</drawer>

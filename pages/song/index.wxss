@@ -1,0 +1,176 @@
+/* pages/song/index.wxss */
+
+.song-bg {
+  background-position: 50%;
+  background-repeat: no-repeat;
+  background-size: auto 100%;
+  -webkit-transform: scale(1.5);
+  transform: scale(1.5);
+  -webkit-transform-origin: center top;
+  transform-origin: center top;
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 100%;
+  overflow: hidden;
+  z-index: -1;
+  -webkit-transition: opacity 0.3s linear;
+  transition: opacity 0.3s linear;
+}
+
+.song-bg::after {
+  position: absolute;
+  left: 0;
+  right: 0;
+  content: " ";
+  bottom: 0;
+  top: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.song-player {
+  margin-top: 140rpx;
+}
+
+.song-disc {
+  width: 592rpx;
+  height: 592rpx;
+  margin: auto;
+  position: relative;
+}
+
+.song-turn {
+  width: 100%;
+  height: 100%;
+}
+
+.song-turn::before {
+  content: " ";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  z-index: 2;
+  background: url(//s3.music.126.net/m/s/img/disc.png?d3bdd10…) no-repeat;
+  background-size: contain;
+}
+
+.song-turn::after {
+  content: " ";
+  position: absolute;
+  top: -140rpx;
+  left: 50%;
+  margin-left: -42rpx;
+  z-index: 5;
+  width: 168rpx;
+  height: 244rpx;
+  background: url(//s3.music.126.net/m/s/img/needle.png?702cf6d…) no-repeat;
+  background-size: contain;
+}
+
+.song-cover {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: 1;
+  margin: -184rpx 0 0 -184rpx;
+  width: 368rpx;
+  height: 368rpx;
+  border-radius: 50%;
+  overflow: hidden;
+  background: url(//s3.music.126.net/m/s/img/disc_default.png?7c9b3adc16f5485c2bfbe8a540534188) no-repeat;
+  background-size: contain;
+}
+
+.song-circling {
+  animation: circling 20s infinite linear;
+}
+
+.song-circling.running {
+  animation-play-state: running;
+}
+
+.song-circling.paused {
+  animation-play-state: paused;
+}
+
+.song-cover image {
+  vertical-align: middle;
+}
+
+@keyframes circling {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(1turn);
+  }
+}
+
+.song-progress {
+  display: flex;
+  align-items: center;
+  padding: 0 20rpx;
+}
+
+.song-progress .cur-time, .song-progress .total-time {
+  font-size: 20rpx;
+  font-weight: 300;
+}
+
+.song-progress .cur-time {
+  color: #fff;
+}
+
+.song-progress .total-time {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.song-action {
+  padding: 20rpx 20rpx 0;
+  display: flex;
+  justify-content: space-between;
+  text-align: center;
+}
+
+.song-action > icon {
+  color: #fff;
+  font-weight: 300;
+  flex: 1;
+}
+
+.song-action > icon:first-child {
+  text-align: left;
+}
+
+.song-action > icon:last-child {
+  text-align: right;
+}
+
+.pl-action-panel {
+  display: flex;
+  align-items: center;
+}
+
+.pl-action-panel .iconfont {
+  color: #999;
+}
+
+.pl-item {
+  margin-left: 15rpx;
+  padding: 8rpx 20rpx 10rpx 0;
+  border-top: 2rpx solid #eee;
+}
+
+.songname {
+  font-size: 28rpx;
+  color: rgba(0, 0, 0, 1);
+}
+
+.singer {
+  font-size: 24rpx;
+  color: rgba(0, 0, 0, 0.7);
+}
