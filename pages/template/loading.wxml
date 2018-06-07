@@ -6,6 +6,6 @@
       <text class='an-3' />
       <text class='an-4' />
     </view>
-    <text class='mu-loading-txt'>{{text || '加载中...'}}</text>
+    <text class='mu-loading-txt'>{{text || '加载中...'}}</text> 
   </view>
 </template>
