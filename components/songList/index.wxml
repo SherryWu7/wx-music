@@ -2,17 +2,19 @@
 <wxs src="../../utils/util.wxs" module="util"></wxs>
 <view class='song-list'>
   <block wx:for="{{list}}" wx:key="{{index}}">
-    <view class='song-list-item' style='width: {{ 100 / itemCount }}%'>
+    <navigator class='song-list-item' style='width: {{ 100 / itemCount }}%' hover-class='none' url='/pages/playlist/index?id={{item.id}}'>
       <view class='remd-img'>
         <image src="{{item.coverImgUrl}}" mode="widthFix" lazy-load="{{true}}"></image>
-        <view class='play-count'>
+        <view class='play-count' wx:if='{{item.playCount}}'>
+          <image src='../../assets/img/cm4_cover_icn_music@2x.png' mode='widthFix' />
           <text class='count'>{{util.formatPlayCount(item.playCount)}}</text>
         </view>
-        <view class='nick-name'>
+        <view class='nick-name' wx:if="{{item.creator.nickname}}">
+        <image src='../../assets/img/cm4_cover_icn_user@2x.png' mode='widthFix' />
           <text>{{item.creator.nickname}}</text>
         </view>
       </view>
-      <view class='item-name'>{{item.name}}</view>
-    </view>
+      <view class='item-name ellipsis'>{{item.name}}</view>
+    </navigator>
   </block>
 </view>

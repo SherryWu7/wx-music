@@ -1,48 +1,123 @@
-<!--pages/discover/index.wxml-->
-<view>
-  <view class='top-nav'>
-    <view class='top-nav-item selected'>个性推荐</view>
-    <view class='top-nav-item'>主播电台</view>
-  </view>
-  <view class='slide-container'>  <!--banner-->
+<import src="../template/loading.wxml" />
+
+<view class='top-nav'>
+  <block wx:for='{{navList}}' wx:key='{{index}}'>
+    <view data-index='{{index}}' bindtap='navChange' class='top-nav-item {{curNavIndex===index ? "selected" : ""}}'>
+      <text>{{item.name}}</text>
+    </view>
+  </block>
+</view>
+<view style='height: 80rpx; background-color: #d43c33;'></view>
+<block wx:if="{{navList[curNavIndex].loading}}">
+  <template is='loading' data="{{ text: '正在加载...', size: 'large' }}" />
+</block>
+<block wx:else>
+  <view class='slide-container'>
+    <!--banner-->
     <view class='slide-bg'></view>
-    <swiper indicator-dots="{{indicatorDots}}"
-      autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" class='slide'>
+    <swiper indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" class='slide'>
       <block wx:for="{{banners}}" wx:key="{{index}}">
         <swiper-item>
-          <image src="{{item.picUrl}}" class="slide-image" mode="widthFix"/>
+          <image src="{{item.picUrl}}" class="slide-image" mode="widthFix" />
         </swiper-item>
       </block>
     </swiper>
   </view>
-  <view class='recommend-menu'>  <!--推荐菜单-->
-    <block wx:for="{{recommendList}}" wx:key="{{index}}">
-      <navigator class='menu-item' url='{{item.url}}'>
-        <image src="{{item.icon}}"></image>
-        <text>{{item.name}}</text>
-      </navigator>
-    </block>
-  </view>
 
-  <view class='recommend-list'>
-    <view class='title'>推荐歌单 ></view>
-    <song-list list="{{recommendSonglist}}"></song-list>
-  </view>
-
-  <view class='recommend-list'>
-    <view class='title'>最新音乐 ></view>
-    <view class='component-music-list'>
-      <block wx:for="{{newMusicList}}" wx:key="{{index}}" wx:if="{{index<6}}">
-        <view class='music-list-item'>
-          <view class='remd-img'>
-            <image src="{{item.song.album.picUrl}}" mode="widthFix"></image>
+  <!--个性推荐-->
+  <view hidden='{{curNavIndex !== 0}}'>
+    <view class='recommend-menu'>
+      <block wx:for="{{recommendList}}" wx:key="{{index}}">
+        <navigator class='menu-item' hover-class='none' url='{{item.url}}'>
+          <view class='item-ico'>
+            <image src="{{item.icon}}" mode="widthFix" />
+            <text wx:if="{{item.id === 2}}" class='item-today'>{{today}}</text>
           </view>
-          <view class='music-list-item-desc'>
-          <text class='songName'>{{item.name}}</text>
-          <text class='singer'>{{item.song.artists[0].name }}</text>
-          </view>
-        </view>
+          <text class='item-txt'>{{item.name}}</text>
+        </navigator>
       </block>
     </view>
+    <view class='recommend-list'>
+      <view class='title'>推荐歌单
+        <image src='../../assets/img/cm4_disc_title_arr@2x.png' mode="widthFix" />
+      </view>
+      <song-list list="{{recommend[0]}}"></song-list>
+    </view>
+    <view class='recommend-list' wx:if='{{recommend[1].length}}'>
+      <view class='title'>最新音乐
+        <image src='../../assets/img/cm4_disc_title_arr@2x.png' mode="widthFix" />
+      </view>
+      <view class='component-music-list'>
+        <block wx:for="{{recommend[1]}}" wx:key="{{index}}" wx:if="{{index<6}}">
+          <view class='music-list-item'>
+            <view class='remd-img'>
+              <image src="{{item.song.album.picUrl}}" mode="widthFix"></image>
+            </view>
+            <view class='music-list-item-desc'>
+              <text class='songName'>{{item.name}}</text>
+              <text class='singer'>{{item.song.artists[0].name }}</text>
+            </view>
+          </view>
+        </block>
+      </view>
+    </view>
+    <view class='recommend-list' wx:if='{{recommend[2].length}}'>
+      <view class='title'>主播电台
+        <image src='../../assets/img/cm4_disc_title_arr@2x.png' mode="widthFix" />
+      </view>
+      <song-list list="{{recommend[2]}}"></song-list>
+    </view>
   </view>
-</view>
+
+  <!--主播电台-->
+  <view hidden='{{curNavIndex !== 1}}'>
+    <view class='dj-nav'>
+      <navigator class='dj-nav-item' hover-class='none' url='/pages/categories/index'>
+        <image src='../../assets/img/cm4_radio_icn_sort@2x.png' mode='widthFix'></image>
+        <text>电台分类</text>
+      </navigator>
+      <view class='dj-nav-item'>
+        <image src='../../assets/img/cm4_radio_icn_rank@2x.png' mode='widthFix'></image>
+        <text>电台排行</text>
+      </view>
+    </view>
+    <view class='mu-grid-panel'>
+      <view class='mu-grid-panel-hd'>电台个性推荐
+        <image class="mu-grid-panel-arrow" src='../../assets/img/cm4_disc_title_arr@2x.png' mode="widthFix" />
+      </view>
+      <view class='mu-grids'>
+        <view class='mu-grid' wx:for='{{ remdDJList }}' wx:key='{{index}}'>
+          <navigator class='media-box' hover-class='none'>
+            <view class="media-box-hd">
+              <image class="media-box-thumb" src='{{item.picUrl}}' mode="widthFix" />
+              <text class='media-box-desc ellipsis'>{{item.name}}</text>
+            </view>
+            <view class="media-box-bd">
+              <text class='media-box-title'>{{item.rcmdtext}}</text>
+            </view>
+          </navigator>
+        </view>
+      </view>
+    </view>
+    <!-- <block wx:for='{{ categories }}' wx:key='{{index}}'>
+    <view class='mu-grid-panel'>
+      <view class='mu-grid-panel-hd'>{{item.name}}
+        <image class="mu-grid-panel-arrow" src='../../assets/img/cm4_disc_title_arr@2x.png' mode="widthFix" />
+      </view>
+      <view class='mu-grids'>
+        <view class='mu-grid' wx:for='{{ remdDJList }}' wx:key='{{index}}'>
+          <navigator class='media-box' hover-class='none'>
+            <view class="media-box-hd">
+              <image class="media-box-thumb" src='{{item.picUrl}}' mode="widthFix" />
+              <text class='media-box-desc ellipsis'>{{item.name}}</text>
+            </view>
+            <view class="media-box-bd">
+              <text class='media-box-title'>{{item.rcmdtext}}</text>
+            </view>
+          </navigator>
+        </view>
+      </view>
+    </view>
+  </block> -->
+  </view>
+</block>

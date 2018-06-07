@@ -96,10 +96,12 @@
   flex: 1;
 }
 
-.slhead-options .option-item image {
-  width: 100rpx;
-  height: 100rpx;
-  background-color: #000;
+.slhead-options .option-item icon {
+  font-size: 52rpx;
+  color: #fff
+}
+.slhead-options .option-item .icon-share {
+  font-size: 42rpx;
 }
 
 .slhead-options .option-item text {

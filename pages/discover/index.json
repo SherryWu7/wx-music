@@ -1,4 +1,5 @@
 {
+  "backgroundColor": "#d43c33",
   "usingComponents": {
     "song-list": "/components/songList/index"
   }

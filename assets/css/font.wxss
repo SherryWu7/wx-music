@@ -1,0 +1,72 @@
+@font-face {
+  font-family: 'iconfont'; /* project id 692710 */
+  src: url('//at.alicdn.com/t/font_692710_ymkjepw9gpqtzkt9.eot');
+  src: url('//at.alicdn.com/t/font_692710_ymkjepw9gpqtzkt9.eot?#iefix') format('embedded-opentype'),
+         url('//at.alicdn.com/t/font_692710_ymkjepw9gpqtzkt9.woff') format('woff'),
+         url('//at.alicdn.com/t/font_692710_ymkjepw9gpqtzkt9.ttf') format('truetype'),
+         url('//at.alicdn.com/t/font_692710_ymkjepw9gpqtzkt9.svg#iconfont') format('svg');
+}
+
+.iconfont {
+  font-family: "iconfont" !important;
+  font-size: 72rpx;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-paused::before {
+  content: '\e64d';
+}
+
+.icon-play::before {
+  content: '\e649';
+}
+
+.icon-next::before {
+  content: '\e64a';
+}
+
+.icon-pre::before {
+  content: '\e64c';
+}
+
+.icon-songlist::before {
+  content: '\e615';
+}
+
+.icon-listcircle::before {
+  content: '\e64f';
+}
+
+.icon-singlecycle::before {
+  content: '\e64e';
+}
+
+.icon-randomplay::before {
+  content: '\e651';
+}
+
+.icon-comment::before {
+  content: '\e616';
+}
+
+.icon-share::before {
+  content: '\e624';
+}
+
+.icon-download::before {
+  content: '\e61b';
+}
+
+.icon-user::before {
+  content: '\e656';
+}
+
+.icon-headset::before {
+  content: '\e630';
+}
+
+.icon-collect::before {
+  content: '\e618';
+}

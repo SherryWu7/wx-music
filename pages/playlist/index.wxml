@@ -17,20 +17,20 @@
   </view>
   <view class='slhead-options'>
     <view class='option-item' bindtap='gotoComment'>
-      <image></image>
+      <icon class="iconfont icon-comment" />
       <text>{{playInfo.commentCount}}</text>
     </view>
     <view class='option-item'>
-      <image></image>
+      <icon class="iconfont icon-share" />
       <text>{{playInfo.shareCount}}</text>
     </view>
     <view class='option-item'>
-      <image></image>
+      <icon class="iconfont icon-download" />
       <text>下载</text>
     </view>
     <view class='option-item'>
-      <image></image>
-      <text>多选</text>
+      <icon class="iconfont icon-collect" />
+      <text>收藏</text>
     </view>
   </view>
 </view>

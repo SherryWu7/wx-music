@@ -6,7 +6,8 @@
     "pages/songlist/index",
     "pages/playlist/index",
     "pages/comments/index",
-    "pages/song/index"
+    "pages/song/index",
+    "pages/categories/index"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -18,34 +19,34 @@
     "selectedColor": "#d33a31",
     "list": [
       {
-        "pagePath": "pages/index/index",
+        "pagePath": "pages/discover/index",
         "text": "发现",
-        "iconPath": "images/icon-qn.png",
-        "selectedIconPath": "images/icon-qn.png"
+        "iconPath": "assets/img/cm4_btm_icn_discovery@3x.png",
+        "selectedIconPath": "assets/img/cm4_btm_icn_discovery_prs@3x.png"
       },
       {
         "pagePath": "pages/index/index",
         "text": "视频",
-        "iconPath": "images/icon-qn.png",
-        "selectedIconPath": "images/icon-qn.png"
+        "iconPath": "assets/img/cm4_btm_icn_video@3x.png",
+        "selectedIconPath": "assets/img/cm4_btm_icn_video_prs@3x.png"
       },
       {
         "pagePath": "pages/index/index",
         "text": "我的",
-        "iconPath": "images/icon-qn.png",
-        "selectedIconPath": "images/icon-qn.png"
+        "iconPath": "assets/img/cm4_btm_icn_music@3x.png",
+        "selectedIconPath": "assets/img/cm4_btm_icn_music_prs@3x.png"
       },
       {
         "pagePath": "pages/index/index",
         "text": "朋友",
-        "iconPath": "images/icon-qn.png",
-        "selectedIconPath": "images/icon-qn.png"
+        "iconPath": "assets/img/cm4_btm_icn_friend@3x.png",
+        "selectedIconPath": "assets/img/cm4_btm_icn_friend_prs@3x.png"
       },
       {
         "pagePath": "pages/index/index",
         "text": "账号",
-        "iconPath": "images/icon-qn.png",
-        "selectedIconPath": "images/icon-qn.png"
+        "iconPath": "assets/img/cm4_btm_icn_account@3x.png",
+        "selectedIconPath": "assets/img/cm4_btm_icn_account_prs@3x.png"
       }
     ]
   }

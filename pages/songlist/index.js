@@ -1,4 +1,6 @@
 // pages/songList/index.js
+const api = require('../../utils/api.js');
+
 Page({
 
   /**
@@ -38,7 +40,7 @@ Page({
   getSongList: function () {
     let { filter, songList } = this.data;
     wx.request({
-      url: 'http://localhost:3000/top/playlist',
+      url: api + '/top/playlist',
       data: {
         offset: filter.offset,
         limit: filter.limit,
@@ -60,7 +62,7 @@ Page({
   },
   getCatlist: function () {  // 歌单分类
     wx.request({
-      url: 'http://localhost:3000/playlist/catlist',
+      url: api + '/playlist/catlist',
       success: (res) => {
         if (res.data.code === 200) {
           let catObject = this.data.catObject
@@ -91,7 +93,7 @@ Page({
   },
   getHighquality: function () {  // 获取最新一条精品歌单
     wx.request({
-      url: 'http://localhost:3000/top/playlist/highquality',
+      url: api + '/top/playlist/highquality',
       data: {
         limit: 1
       },

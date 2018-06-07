@@ -1,0 +1,62 @@
+@keyframes anloading {
+  0% {
+    transform: translateY(0rpx);
+  }
+
+  50% {
+    transform: translateY(20rpx);
+  }
+
+  100% {
+    transform: translateY(0rpx);
+  }
+}
+
+.mu-loading {
+  padding: 50rpx 0;
+  text-align: center;
+  color: #888;
+  font-size: 26rpx;
+}
+
+.loading-animation {
+   display: inline-block;
+  vertical-align: baseline; 
+  height: 30rpx;
+  overflow: hidden;
+   margin-right: 10rpx; 
+}
+
+.loading-animation > text {
+  width: 5rpx;
+  height: 30rpx;
+  background-color: #d43c33;
+  position: relative;
+  display: inline-block;
+  margin-right: 6rpx;
+  border-radius: 3rpx;
+  animation: anloading 0.9s linear infinite;
+  transform-origin: center bottom;
+}
+
+ .loading-animation .an-2 {
+  animation-delay: -.6s;
+}
+
+.loading-animation .an-3 {
+  animation-delay: -.3s;
+} 
+
+.loading-animation .an-4 {
+  animation-delay: -.4s;
+} 
+
+.mu-loading-lg .loading-animation {
+  display: block
+}
+
+.mu-loading-lg .mu-loading-txt {
+  display: block;
+  margin-top: 16rpx;
+}
+

@@ -33,7 +33,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 3,
+			"current": -1,
 			"list": [
 				{
 					"id": 0,
@@ -58,6 +58,12 @@
 					"name": "播放",
 					"pathName": "pages/song/index",
 					"query": "id=72408"
+				},
+				{
+					"id": -1,
+					"name": "电台分类",
+					"pathName": "pages/categories/index",
+					"query": ""
 				}
 			]
 		}

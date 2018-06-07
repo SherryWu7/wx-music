@@ -1,0 +1,27 @@
+<!--电台分类-->
+<view class='mu-categories-panel'>
+  <view class='mu-categories-hd'>热门分类</view>
+  <view class='mu-categories'>
+    <block wx:for='{{ categories }}' wx:key='{{index}}' wx:if='{{index < 6}}'>
+      <view class='mu-categorise'>
+        <view class='mu-categorise-box'>
+          <image class='mu-categorise-thumb' src='{{item.pic56x56Url}}' mode='widthFix' />
+          <text class='mu-categorise-title'>{{item.name}}</text>
+        </view>
+      </view>
+    </block>
+  </view>
+</view>
+<view class='mu-categories-panel'>
+  <view class='mu-categories-hd'>更多分类</view>
+  <view class='mu-categories'>
+    <block wx:for='{{ categories }}' wx:key='{{index}}' wx:if='{{index >= 6}}'>
+      <view class='mu-categorise'>
+        <view class='mu-categorise-box'>
+          <image class='mu-categorise-thumb' src='{{item.pic56x56Url}}' mode='widthFix' />
+          <text class='mu-categorise-title'>{{item.name}}</text>
+        </view>
+      </view>
+    </block>
+  </view>
+</view>

@@ -77,7 +77,7 @@ Page({
   getSongDetail: function (id) {
 
     wx.request({
-      url: 'http://localhost:3000/song/detail',
+      url: 'http://172.16.110.32:3000/song/detail',
       data: {
         ids: id
       },
@@ -97,7 +97,7 @@ Page({
 
   getSongLyric: function (id) {
     wx.request({
-      url: 'http://localhost:3000/lyric',
+      url: 'http://172.16.110.32:3000/lyric',
       data: {
         id
       },
@@ -134,7 +134,7 @@ Page({
       title: `${detail.name}-${detail.ar[0].name}`,
     })
     wx.request({
-      url: 'http://localhost:3000/music/url',
+      url: 'http://172.16.110.32:3000/music/url',
       data: {
         id: detail.id
       },

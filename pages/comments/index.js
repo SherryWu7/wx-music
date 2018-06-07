@@ -72,7 +72,7 @@ Page({
   getComments: function () {
     let { filter, comments, hotComments } = this.data;
     wx.request({
-      url: 'http://localhost:3000/comment/playlist',
+      url: 'http://172.16.110.32:3000/comment/playlist',
       data: {
         id: filter.id,
         offset: filter.offset,
