@@ -1,5 +1,6 @@
 <!--pages/songList/index.wxml-->
-<wxs src="../../utils/util.wxs" module="util"></wxs>
+<wxs src="../../utils/util.wxs" module="util" />
+<import src="../template/loading.wxml" />
 <view>
   <view class='songlist-header'>
     <view class='slhead-bg' style='background-image: url({{highqualityTop.coverImgUrl}})'></view>
@@ -8,33 +9,51 @@
         <image src='{{highqualityTop.coverImgUrl}}' mode="widthFix"></image>
       </view>
       <view class='slhead-txt'>
-        <view class='txt-title'>精品歌单 ></view>
-        <text  class='txt-name'>{{highqualityTop.name}}</text>
-        <text  class='txt-copywriter'>{{highqualityTop.copywriter}}</text>
+        <view class='txt-title'>
+          <image class='mu-icon-best' src='../../assets/img/cm2_lists_icn_best@2x.png' mode="widthFix" /> 精品歌单
+          <image class='inline-m' src='../../assets/img/cm2_list_icn_arr@2x.png' mode="widthFix" style='width: 18rpx;' />
+        </view>
+        <text class='txt-name'>{{highqualityTop.name}}</text>
+        <text class='txt-copywriter'>{{highqualityTop.copywriter}}</text>
       </view>
     </view>
   </view>
   <view style='padding: 15rpx 10rpx;'>
     <view class='song-list-filter'>
-      <view class='select-classify' bindtap='selectClassify'>{{filter.cat}} ></view>
+      <view class='select-classify' bindtap='selectClassify'>
+        {{filter.cat}}
+        <image class="mu-grid-panel-arrow" src='../../assets/img/cm4_disc_title_arr@2x.png' mode="widthFix" />
+      </view>
     </view>
   </view>
   <song-list list="{{songList}}" item-count="2"></song-list>
+  <block hidden="{{!loading}}">
+    <template is='loading' />
+  </block>
 </view>
-<drawer id="drawer" bind:cancel="_cancelDrawer" bind:confirm="_confirmDrawer">
-  <view>
-  </view>
-  <block wx:for="{{catObject.categories}}" wx:key="{{index}}">
-    <view style='background-color: #eee; height: 16rpx'></view>
-    <view class='cat'>
-      <view class='cat-item cat-topclass'>
-        <view> {{item.name}}</view>
+
+<drawer height="100%" id="drawer" bind:cancel="_cancelDrawer" bind:confirm="_confirmDrawer">
+  <view class='cat-container'>
+    <view class='cat-box'>
+      <view bindtap='selectedCat' data-name='{{catObject.all.name}}' class="cat-item cat-all {{ catObject.all.name === filter.cat ? 'selected' : ''}}">{{catObject.all.name}}
+        <text wx:if="{{catObject.all.name === filter.cat}}" class='cat-selected' style='background-image: url({{catObject.selectedIcon}})' />
       </view>
-      <block wx:for="{{item.subList}}" wx:for-index="childIdx" wx:for-item="child" wx:key="{{childIdx}}">
-        <view class='cat-item cat-subclass'>
-          <view bindtap='selectedCat' data-name='{{child.name}}' class="{{ child.name === filter.cat ? 'selected' : ''}}">{{child.name}}</view>
+      <block wx:for="{{catObject.categories}}" wx:key="{{index}}">
+        <view style='background-color: #eee; height: 16rpx'></view>
+        <view class='cat'>
+          <view class='cat-item cat-topclass'>
+            <image src='../../assets/img/cm4_cate_icn_{{index+1}}@2x.png' mode='widthFix' />
+            <view>{{item.name}}</view>
+          </view>
+          <block wx:for="{{item.subList}}" wx:for-index="childIdx" wx:for-item="child" wx:key="{{childIdx}}">
+            <view bindtap='selectedCat' data-name='{{child.name}}' class="cat-item {{ child.name === filter.cat ? 'selected' : ''}}">
+              <text wx:if="{{child.hot}}" class='cat-hot' style='background-image: url({{catObject.hotIcon}})' />
+              <text wx:if="{{child.name === filter.cat}}" class='cat-selected' style='background-image: url({{catObject.selectedIcon}})' /> {{child.name}}
+            </view>
+          </block>
         </view>
       </block>
+      <view class='cat-close' bindtap='_cancelDrawer'>取消</view>
     </view>
-  </block>
+  </view>
 </drawer>

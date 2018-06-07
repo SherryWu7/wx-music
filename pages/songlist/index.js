@@ -1,5 +1,6 @@
 // pages/songList/index.js
 const api = require('../../utils/api.js');
+const base64 = require('../../assets/img/base64.js');
 
 Page({
 
@@ -7,6 +8,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+    loading: false,
     songList: [],  // 歌单列表
     catlist: [],  // 歌单分类
     highqualityTop: {},  // 精品歌单推荐no.1
@@ -19,6 +21,8 @@ Page({
     },
     selectedSongListName: '全部歌单',
     catObject: {
+      hotIcon: base64.hot,
+      selectedIcon: base64.selectedCat,
       categories: []
     }
   },
@@ -39,6 +43,7 @@ Page({
   },
   getSongList: function () {
     let { filter, songList } = this.data;
+    this.setData({ loading: true });
     wx.request({
       url: api + '/top/playlist',
       data: {
@@ -48,6 +53,7 @@ Page({
         cat: filter.cat
       },
       success: (res) => {
+        this.setData({ loading: false });
         if (res.data.code === 200) {
           filter.pageNumber++;
           filter.offset = (filter.pageNumber - 1) * filter.limit;

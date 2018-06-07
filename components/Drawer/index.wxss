@@ -19,6 +19,5 @@
   z-index: 1001;
   background-color: #fff;
   /* height: 80%;  */
-  overflow-y: scroll;
-  height: 400px;
+  height: 100%;
 }

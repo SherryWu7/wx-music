@@ -27,3 +27,15 @@ image {
   white-space: nowrap;
   word-break: normal;
 }
+
+.inline-m {
+  display: inline-block;
+  vertical-align: middle;
+  margin-top: -4rpx;
+}
+
+.mu-icon {
+  display: inline-block;
+  vertical-align: middle;
+  margin-top: -4rpx;
+}

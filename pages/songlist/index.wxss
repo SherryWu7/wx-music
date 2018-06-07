@@ -97,31 +97,101 @@
 .cat {
   font-size: 28rpx;
   overflow: hidden;
-  /* display: flex;
-  flex-wrap: wrap */
 }
 
 .cat-item {
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
   float: left;
   width: 25%;
+  height: 90rpx;
+  line-height: 90rpx;
   text-align: center;
-  border: 2rpx solid rgba(0, 0, 0, 0.1);
+  border: 2rpx solid #eee;
   border-top-width: 0;
   border-left-width: 0;
 }
 
 .cat-topclass {
-  height: 120rpx;
-  line-height: 120rpx;
+  height: 178rpx;
+  line-height: 1;
   overflow: hidden;
+  color: rgba(0, 0, 0, 0.6);
 }
 
-.cat-subclass {
-  height: 60rpx;
-  line-height: 60rpx;
+.cat-topclass > image {
+  width: 60rpx;
+  margin: 35rpx 0 10rpx;
 }
 
-.cat-item .selected {
-  height: 60rpx;
-  border: 1px solid #d43c33;
+.cat-all {
+  float: none;
+  width: auto;
+  border-top-width: 2rpx;
+  border-left-width: 2rpx;
+  margin: 10rpx;
+  font-size: 32rpx;
+  font-weight: 400;
+}
+
+.cat-item.selected {
+  border: 2rpx solid #d43c33;
+  z-index: 2;
+}
+
+.cat-hot, .cat-selected {
+  position: absolute;
+  z-index: 2;
+  background-repeat: no-repeat;
+}
+
+.cat-hot {
+  width: 56rpx;
+  height: 56rpx;
+  left: 0;
+  top: 0;
+  background-size: 100%;
+}
+
+.cat-selected {
+  width: 40rpx;
+  height: 40rpx;
+  bottom: -2rpx;
+  right: -2rpx;
+  background-position: right bottom;
+  background-size: 48rpx 48rpx;
+}
+
+.cat-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.cat-box {
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+}
+
+.cat-close {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  z-index: 3;
+  height: 90rpx;
+  line-height: 90rpx;
+  text-align: center;
+  background-color: #d43c33;
+  color: #fff;
+  font-size: 30rpx;
+}
+
+.mu-icon-best {
+  width: 36rpx;
+  display: inline-block;
+  vertical-align: middle;
+  margin-top: -6rpx;
 }

@@ -6,6 +6,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+    loading: true,
     categories: [],  // 分类
   },
 
@@ -15,7 +16,7 @@ Page({
       success: (res) => {
         if (res.data.code === 200) {
           console.log(res.data.categories)
-          this.setData({ categories: res.data.categories });
+          this.setData({ categories: res.data.categories, loading: false });
         }
       }
     })

@@ -6,7 +6,11 @@ Component({
   properties: {
     animationData: {
       type: Object,
-      value: {}
+      value: {},
+    },
+    height: {  // 展示高度
+      type: null,
+      value: 400
     }
   },
 
@@ -14,21 +18,22 @@ Component({
    * 组件的初始数据
    */
   data: {
-    isShow: false
+    isShow: false,
+    heightStr: '400rpx'
   },
 
   /**
    * 组件的方法列表
    */
   methods: {
-    showDrawer(){
+    showDrawer() {
       var animation = wx.createAnimation({
         duration: 200,
         timingFunction: 'linear',
         delay: 0
       });
       this.animation = animation;
-      animation.translateY(400).step(); 
+      animation.translateY(this.data.height).step();
       this.setData({
         animationData: animation.export(),
         isShow: true
@@ -41,19 +46,28 @@ Component({
       }.bind(this), 200);
     },
     hideDrawer() {
-      this.animation.translateY(400).step();
+      this.animation.translateY(this.data.height).step();
       this.setData({
         animationData: this.animation.export(),
       })
-      setTimeout(()=>{
+      setTimeout(() => {
         this.setData({ isShow: false });
       }, 200)
     },
-    _cancel(){
+    _cancel() {
       this.triggerEvent('cancel');
     },
     _confirm() {
       this.triggerEvent('confirm');
     },
+  },
+
+  ready: function () {
+    const { height } = this.data;
+    let heightStr = height;
+    if (typeof height === 'number') {
+      heightStr = height + 'rpx';
+    }
+    this.setData({ heightStr })
   }
 })
