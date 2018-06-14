@@ -33,7 +33,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 0,
+			"current": 3,
 			"list": [
 				{
 					"id": 0,
@@ -45,7 +45,7 @@
 					"id": 1,
 					"name": "歌单详情",
 					"pathName": "pages/playlist/index",
-					"query": "id=2239642434"
+					"query": "id=924680166"
 				},
 				{
 					"id": -1,
@@ -54,15 +54,21 @@
 					"query": "id=2239642434"
 				},
 				{
-					"id": -1,
+					"id": 3,
 					"name": "播放",
 					"pathName": "pages/song/index",
-					"query": "id=72408"
+					"query": "id=27506169"
 				},
 				{
 					"id": -1,
 					"name": "电台分类",
 					"pathName": "pages/categories/index",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "排行榜",
+					"pathName": "pages/rank/index",
 					"query": ""
 				}
 			]

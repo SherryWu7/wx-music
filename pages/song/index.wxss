@@ -29,75 +29,87 @@
   background-color: rgba(0, 0, 0, 0.5);
 }
 
-.song-player {
-  margin-top: 140rpx;
+.player-pointer {
+  position: absolute;
+  top: 0;
+  z-index: 4;
+  width: 100%;
+  text-align: center;
+}
+
+.player {
+  margin-top: 170rpx;
+}
+
+.player-pointer image {
+  width: 222rpx;
+  height: 366rpx;
+  margin: -60rpx 0 0 111rpx;
+  transform-origin: 60rpx 60rpx;
+  transform: rotate(-25deg);
+  transition: all linear 0.5s;
+}
+.player-pointer .playing {
+  transform: rotate(0);
+}
+
+.player-disc {
+  position: relative;
+  width: 588rpx;
+  height: 588rpx;
+  margin: auto;
+  animation: circling 20s infinite linear;
+   animation-play-state: paused;  
+}
+
+.running {
+  animation-play-state: running;
+}
+
+.paused {
+  animation-play-state: paused;
 }
 
 .song-disc {
-  width: 592rpx;
-  height: 592rpx;
-  margin: auto;
-  position: relative;
-}
-
-.song-turn {
-  width: 100%;
-  height: 100%;
-}
-
-.song-turn::before {
-  content: " ";
   position: absolute;
   left: 0;
   right: 0;
   top: 0;
   bottom: 0;
   z-index: 2;
-  background: url(//s3.music.126.net/m/s/img/disc.png?d3bdd10…) no-repeat;
-  background-size: contain;
-}
-
-.song-turn::after {
-  content: " ";
-  position: absolute;
-  top: -140rpx;
-  left: 50%;
-  margin-left: -42rpx;
-  z-index: 5;
-  width: 168rpx;
-  height: 244rpx;
-  background: url(//s3.music.126.net/m/s/img/needle.png?702cf6d…) no-repeat;
-  background-size: contain;
 }
 
 .song-cover {
   position: absolute;
   left: 50%;
   top: 50%;
+  transform: translate(-50%, -50%);
   z-index: 1;
-  margin: -184rpx 0 0 -184rpx;
   width: 368rpx;
   height: 368rpx;
-  border-radius: 50%;
-  overflow: hidden;
-  background: url(//s3.music.126.net/m/s/img/disc_default.png?7c9b3adc16f5485c2bfbe8a540534188) no-repeat;
-  background-size: contain;
 }
 
-.song-circling {
-  animation: circling 20s infinite linear;
+.song-light {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  z-index: 3;
+  /* transform: translateY(-50%) */
 }
 
-.song-circling.running {
+.circling {
+  /* transform-origin: center, center; */
+   animation: circling 20s infinite linear; 
+}
+
+.circling.running {
   animation-play-state: running;
 }
 
-.song-circling.paused {
+.circling.paused {
   animation-play-state: paused;
-}
-
-.song-cover image {
-  vertical-align: middle;
 }
 
 @keyframes circling {
@@ -108,6 +120,42 @@
   100% {
     transform: rotate(1turn);
   }
+}
+
+.operation {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  z-index: 5;
+  width: 100%
+}
+
+
+.song-actions {
+  display: flex;
+  align-items: center;
+  margin: 0 80rpx;
+}
+
+.song-actions .action-item {
+  position: relative;
+  flex: 1;
+  text-align: center;
+}
+
+.song-actions .action-item  image {
+  width: 80rpx;
+  height: 80rpx;
+}
+
+.song-actions .action-item text {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  margin-left: 10rpx;
+  margin-top: -35rpx;
+  font-size: 22rpx;
+  color: #fff;
 }
 
 .song-progress {
@@ -129,25 +177,11 @@
   color: rgba(255, 255, 255, 0.8);
 }
 
-.song-action {
-  padding: 20rpx 20rpx 0;
+.play-bar {
   display: flex;
   justify-content: space-between;
-  text-align: center;
-}
-
-.song-action > icon {
-  color: #fff;
-  font-weight: 300;
-  flex: 1;
-}
-
-.song-action > icon:first-child {
-  text-align: left;
-}
-
-.song-action > icon:last-child {
-  text-align: right;
+  align-items: center;
+  padding: 0 0 30rpx;
 }
 
 .pl-action-panel {

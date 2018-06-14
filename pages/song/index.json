@@ -1,5 +1,5 @@
 {
   "usingComponents": {
-    "drawer": "/components/Drawer/index"
+    "drawer": "/components/drawer/index"
   }
 }

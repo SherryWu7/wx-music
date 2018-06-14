@@ -1,4 +1,6 @@
-// pages/songListDetail/index.js
+const api = require('../../utils/api.js');
+const app = getApp();
+
 Page({
 
   /**
@@ -27,7 +29,7 @@ Page({
    */
   getDetail: function (id) {
     wx.request({
-      url: 'http://172.16.110.32:3000/playlist/detail',
+      url: api + '/playlist/detail',
       data: {
         id
       },
@@ -69,21 +71,28 @@ Page({
       url: `/pages/comments/index?id=${playInfo.id}`,
     })
   },
-
-  playSong: function (event) {
-    const index = parseInt(event.currentTarget.id);
-    wx.setStorage({
-      key: 'play-list',
-      data: this.data.playInfo.tracks,
-    });
-    wx.setStorage({
-      key: 'player-setting',
-      data: {
-        index
-      },
-    });
-    wx.navigateTo({
-      url: '/pages/song/index',
-    })
+  // 播放音乐
+  playMusic: function (event) {
+    const index = event.currentTarget.dataset.index;
+    let playlist = this.data.playInfo.tracks;
+    app.globalData.list_song = playlist;
+    app.globalData.index_song = index;
   }
+
+  // playSong: function (event) {
+  //   const index = parseInt(event.currentTarget.id);
+  //   wx.setStorage({
+  //     key: 'play-list',
+  //     data: this.data.playInfo.tracks,
+  //   });
+  //   wx.setStorage({
+  //     key: 'player-setting',
+  //     data: {
+  //       index
+  //     },
+  //   });
+  //   wx.navigateTo({
+  //     url: '/pages/song/index',
+  //   })
+  // }
 })

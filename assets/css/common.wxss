@@ -20,11 +20,11 @@
 }
 
 .loading-animation {
-   display: inline-block;
-  vertical-align: baseline; 
+  display: inline-block;
+  vertical-align: baseline;
   height: 30rpx;
   overflow: hidden;
-   margin-right: 10rpx; 
+  margin-right: 10rpx;
 }
 
 .loading-animation > text {
@@ -39,27 +39,26 @@
   transform-origin: center bottom;
 }
 
- .loading-animation .an-2 {
+.loading-animation .an-2 {
   animation-delay: -.6s;
 }
 
 .loading-animation .an-3 {
   animation-delay: -.3s;
-} 
+}
 
 .loading-animation .an-4 {
   animation-delay: -.4s;
-} 
+}
 
 .mu-loading-lg .loading-animation {
-  display: block
+  display: block;
 }
 
 .mu-loading-lg .mu-loading-txt {
   display: block;
   margin-top: 16rpx;
 }
-
 
 .mu-grid-panel-hd {
   padding: 15rpx 10rpx;
@@ -129,3 +128,65 @@
   line-height: 28rpx;
 }
 
+/*歌曲、歌单封面上的播放次数及其他信息公共样式  ---start*/
+
+.mu-song-cover {
+  position: relative;
+}
+
+.mu-song-cover-thumb {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  border-radius: 4rpx;
+}
+
+.mu-cover-play-count {
+  position: absolute;
+  right: 8rpx;
+  top: 0;
+  font-size: 22rpx;
+  font-weight: 300;
+  color: #fff;
+  z-index: 3;
+}
+
+.mu-cover-play-count .ico {
+  width: 20rpx;
+  display: inline-block;
+  vertical-align: middle;
+  margin-top: -4rpx;
+  margin-right: 6rpx;
+}
+
+.mu-song-cover::before, .mu-song-cover::after {
+  content: " ";
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 40rpx;
+  z-index: 2;
+}
+
+.mu-song-cover::before {
+  top: 0;
+  background-image: -webkit-linear-gradient(top, rgba(0, 0, 0, 0.2), transparent);
+  background-image: linear-gradient(180deg, rgba(0, 0, 0, 0.2), transparent);
+}
+
+.mu-song-cover::after {
+  bottom: 0;
+  background-image: -webkit-linear-gradient(bottom, rgba(0, 0, 0, 0.2), transparent);
+  background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.2), transparent);
+}
+
+.mu-cover-info {
+  position: absolute;
+  bottom: 4rpx;
+  right: 4rpx;
+  width: 46rpx;
+  height: 46rpx;
+}
+
+/*歌曲、歌单封面上的播放次数及其他信息公共样式  ---end*/

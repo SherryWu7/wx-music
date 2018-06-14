@@ -1,58 +1,87 @@
 <!--pages/songListDetail/index.wxml-->
-<view class='songlist-header'>
-  <view class='slhead-bg' style='background-image: url({{playInfo.coverImgUrl}})'></view>
-  <view class='slhead-wrap'>
-    <view class='slhead-img'>
-      <image src='{{playInfo.coverImgUrl}}' mode="widthFix"></image>
+<wxs src="../../utils/util.wxs" module="util"></wxs>
+<view class='play-list-bg' style='background-image: url({{playInfo.coverImgUrl}})' />
+<view class='play-list-body'>
+  <view class='songlist-header'>
+    <view class='slhead-wrap'>
+      <view class='mu-song-cover slhead-img'>
+        <image class='mu-song-cover-thumb' src='{{playInfo.coverImgUrl}}' mode="widthFix"></image>
+        <view class='mu-cover-play-count' wx:if='{{playInfo.playCount}}'>
+          <image class='ico' src='../../assets/img/cm4_cover_icn_music@2x.png' mode='widthFix' />
+          <text class='count'>{{util.formatPlayCount(playInfo.playCount)}}</text>
+        </view>
+        <view class='mu-cover-info'>
+          <image class='mu-song-cover-thumb' src='../../assets/img/cm2_list_detail_icn_infor@2x.png' mode='widthFix' />
+        </view>
+      </view>
+      <view class='slhead-txt'>
+        <view class='txt-title'>{{playInfo.name}}</view>
+        <view class='txt-auth'>
+          <navigator>
+            <image src='{{playInfo.creator.avatarUrl}}'></image>
+            <text>{{playInfo.creator.nickname}}</text>
+          </navigator>
+        </view>
+      </view>
     </view>
-    <view class='slhead-txt'>
-      <view class='txt-title'>{{playInfo.name}}</view>
-      <view class='txt-auth'>
-        <navigator>
-          <image src='{{playInfo.creator.avatarUrl}}'></image>
-          <text>{{playInfo.creator.nickname}}</text>
-        </navigator>
+    <view class='slhead-options'>
+      <view class='option-item' bindtap='gotoComment'>
+        <image src='../../assets/img/cm2_list_detail_icn_cmt@2x.png' mode='widthFix' />
+        <text>{{util.formatPlayCount(playInfo.commentCount)}}</text>
+      </view>
+      <view class='option-item'>
+        <image src='../../assets/img/cm2_list_detail_icn_share@2x.png' mode='widthFix' />
+        <text>{{util.formatPlayCount(playInfo.shareCount)}}</text>
+      </view>
+      <view class='option-item'>
+        <image src='../../assets/img/cm2_list_detail_icn_dld@2x.png' mode='widthFix' />
+        <text>下载</text>
+      </view>
+      <view class='option-item'>
+        <image src='../../assets/img/cm4_list_detail_icn_multi@2x.png' mode='widthFix' />
+        <text>多选</text>
       </view>
     </view>
   </view>
-  <view class='slhead-options'>
-    <view class='option-item' bindtap='gotoComment'>
-      <icon class="iconfont icon-comment" />
-      <text>{{playInfo.commentCount}}</text>
+  <view class='play-list'>
+    <view class='play-all'>
+      <view class='all-ico'>
+        <image src='../../assets/img/cm2_list_icn_play@2x.png' mode='widthFix'></image>
+      </view>
+      <view class='all-count'>
+        <text>播放全部</text> (共{{util.formatPlayCount(playInfo.trackCount)}}首)
+      </view>
+      <view class='all-collect'>
+        <image src='../../assets/img/cm2_runfm_icn_add@2x.png' mode='widthFix'></image>收藏 ({{playInfo.subscribedCount}})
+      </view>
     </view>
-    <view class='option-item'>
-      <icon class="iconfont icon-share" />
-      <text>{{playInfo.shareCount}}</text>
-    </view>
-    <view class='option-item'>
-      <icon class="iconfont icon-download" />
-      <text>下载</text>
-    </view>
-    <view class='option-item'>
-      <icon class="iconfont icon-collect" />
-      <text>收藏</text>
-    </view>
-  </view>
-</view>
-<view class='play-list'>
-  <view></view>
-  <block wx:for="{{playInfo.tracks}}" wx:key="{{index}}">
-    <view class='play-item'>
-      <view class='item-number'>{{index+1}}</view>
-      <!-- <navigator class='item-wrap' hover-class='none' url='/pages/song/index?id={{item.id}}'>
+    <block wx:for="{{playInfo.tracks}}" wx:key="{{index}}">
+      <view class='play-item'>
+        <view class='item-number'>{{index+1}}</view>
+        <!-- <navigator class='item-wrap' hover-class='none' url='/pages/song/index?id={{item.id}}'>
         <view class='wrap-info'>
           <text class='song-name ellipsis'>{{item.name}}</text>
           <text class='song-copyright ellipsis'>{{item.ar[0].name}} - {{item.al.name}}</text>
         </view>
         <view class='wrap-actions'>play</view>
       </navigator> -->
-      <view class='item-wrap' id="{{index}}" bindtap='playSong'>
-        <view class='wrap-info'>
-          <text class='song-name ellipsis'>{{item.name}}</text>
-          <text class='song-copyright ellipsis'>{{item.ar[0].name}} - {{item.al.name}}</text>
-        </view>
-        <view class='wrap-actions'>play</view>
+        <navigator url='/pages/song/index?id={{item.id}}' class='item-wrap' bindtap='playMusic' data-index="{{index}}">
+          <view class='wrap-info'>
+            <view class='song-name ellipsis'>{{item.name}}
+              <text wx:if="{{item.alia.length}}">（{{item.alia[0]}}）</text>
+            </view>
+            <text class='song-copyright ellipsis'>{{item.ar[0].name}} - {{item.al.name}}</text>
+          </view>
+          <block wx:if="{{item.mv}}">
+            <navigator class='wrap-mv'>
+              <image src='../../assets/img/cm4_list_tag_mv@2x.png' mode='widthFix'></image>
+            </navigator>
+          </block>
+          <view class='wrap-actions'>
+            <image src='../../assets/img/cm4_list_icn_more@2x.png' mode='widthFix'></image>
+          </view>
+        </navigator>
       </view>
-    </view>
-  </block>
+    </block>
+  </view>
 </view>

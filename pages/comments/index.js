@@ -1,4 +1,5 @@
-// pages/comments/index.js
+const api = require('../../utils/api.js');
+
 Page({
 
   /**
@@ -72,7 +73,7 @@ Page({
   getComments: function () {
     let { filter, comments, hotComments } = this.data;
     wx.request({
-      url: 'http://172.16.110.32:3000/comment/playlist',
+      url: api + '/comment/playlist',
       data: {
         id: filter.id,
         offset: filter.offset,

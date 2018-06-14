@@ -1,5 +1,6 @@
 const app = getApp();
 const util = require('../../utils/util.js');
+const api = require('../../utils/api.js');
 
 const backgroundAudioManager = wx.getBackgroundAudioManager();
 
@@ -11,6 +12,7 @@ Page({
     detail: {},
     lyricsList: [],
     songUrl: null,
+    totalCountComments: 0,  // 评论总数
 
     currentTime: 0,
     totalTime: 0,
@@ -21,21 +23,22 @@ Page({
       {
         id: 1,
         name: '列表循环',
-        icon: 'icon-listcircle'
+        icon: '../../assets/img/cm2_icn_loop@2x.png'
       },
       {
         id: 2,
         name: '单曲循环',
-        icon: 'icon-singlecycle'
+        icon: '../../assets/img/cm2_icn_one@2x.png'
       },
       {
         id: 3,
         name: '随机播放',
-        icon: 'icon-randomplay'
+        icon: '../../assets/img/cm2_icn_shuffle@2x.png'
       }
     ],
     curModeIndex: 0,  // 循环类型
     playStatus: 0,  // 0: 暂停  1：播放
+    playing: false,  // 是否正在播放
 
     songList: []
   },
@@ -44,7 +47,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    // this.getSongDetail(options.id);
+    this.getSongDetail(options.id);
     this.getSongLyric(options.id);
     wx.getStorage({  // 获取缓存歌单详情信息
       key: 'play-list',
@@ -75,9 +78,8 @@ Page({
   },
 
   getSongDetail: function (id) {
-
     wx.request({
-      url: 'http://172.16.110.32:3000/song/detail',
+      url: api + '/song/detail',
       data: {
         ids: id
       },
@@ -89,6 +91,7 @@ Page({
           })
           this.setData({ detail: res.data.songs[0] }, () => {
             this.getSongUrl();
+            this.getComments(id);
           })
         }
       }
@@ -97,7 +100,7 @@ Page({
 
   getSongLyric: function (id) {
     wx.request({
-      url: 'http://172.16.110.32:3000/lyric',
+      url: api + '/lyric',
       data: {
         id
       },
@@ -134,15 +137,36 @@ Page({
       title: `${detail.name}-${detail.ar[0].name}`,
     })
     wx.request({
-      url: 'http://172.16.110.32:3000/music/url',
+      url: api + '/music/url',
       data: {
         id: detail.id
       },
       success: (res) => {
         if (res.data.code === 200) {
           this.setData({ songUrl: res.data.data[0].url }, () => {
-            this.play();
+            // this.play();
           });
+        }
+      }
+    })
+  },
+
+  /**
+   * 获取歌曲评论总数
+   */
+  getComments: function (id) {
+    wx.request({
+      url: api + '/comment/music',
+      data: {
+        id,
+        offset: 0,
+        limit: 0,
+      },
+      success: (res) => {
+        if (res.data.code === 200) {
+          this.setData({
+            totalCountComments: res.data.total
+          })
         }
       }
     })
@@ -188,16 +212,14 @@ Page({
    */
   modeChange: function () {
     let { curModeIndex, modeList } = this.data;
-    if (curModeIndex === (modeList.length - 1)) {
-      curModeIndex = 0;
-    } else {
-      curModeIndex = curModeIndex + 1;
-    }
-    this.setData({ curModeIndex }, () => {
-      wx.showToast({
-        title: modeList[curModeIndex].name,
-        icon: 'none',
-      })
+    curModeIndex++;
+    curModeIndex = curModeIndex > (modeList.length - 1) ? 0 : curModeIndex;
+    this.setData({ curModeIndex });
+
+    wx.showToast({
+      title: modeList[curModeIndex].name,
+      // icon: 'none',
+      duration: 2000
     });
   },
 
@@ -206,20 +228,20 @@ Page({
    */
 
   playStatusChange: function () {
-    let { playStatus } = this.data;
-    if (playStatus === 0) {
-      playStatus = 1;
-      backgroundAudioManager.play();
-    } else {
-      playStatus = 0;
+    let { playing } = this.data;
+    if (playing) {
       backgroundAudioManager.pause();
+      playing = false;
+    } else {
+      backgroundAudioManager.play();
+      playing = true;
     }
-    this.setData({ playStatus });
+    this.setData({ playing });
   },
   /**
-   * 上一首
+   * 上、下一首
    */
-  playSongChange: function (event) {
+  playMusicChange: function (event) {
     const next = parseInt(event.currentTarget.id);
     let { curModeIndex, songList, detail } = this.data;
     let playIndex = 0;

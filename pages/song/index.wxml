@@ -1,26 +1,57 @@
 <!--pages/song/index.wxml-->
 <view class='song-bg' style='background-image: url("//music.163.com/api/img/blur/{{detail.al.pic_str || detail.al.pic}}"); opacity: 1'></view>
-<view class='song-player' bindtap='play'>
-  <view class='song-disc'>
-    <view class='song-turn'>
-      <view class='song-cover song-circling {{ playStatus===1 ? "running" : "paused" }}'>
-        <image src='{{detail.al.picUrl}}' mode="widthFix"></image>
-      </view>
+<view class='player'>
+  <view class='player-pointer'>
+    <image class='{{ playing ? "playing" : "" }}' src='../../assets/img/cm2_play_needle_play-ip6@2x.png' mode='widthFix' />
+  </view>
+  <view class='player-disc {{ playing ? "running" : "paused" }}'>
+    <view class='song-disc'>
+      <image src='../../assets/img/disc.png' mode='widthFix' />
+    </view>
+    <view class='song-cover'>
+      <image class='default-cover' src='../../assets/img/cm2_default_cover_play-ip6@2x.jpg' mode='widthFix' hidden='{{detail.al.picUrl}}' />
+      <image src='{{detail.al.picUrl}}' mode="widthFix"></image>
+    </view>
+    <view class='song-light'>
+      <image src='../../assets/img/disc_light-ip6.png' mode='widthFix' />
     </view>
   </view>
 </view>
-<view class='song-progress'>
-  <text class='cur-time'>{{currentTime}}</text>
-  <slider style='width: 100%;' value="{{sliderValue}}" min="0" max="{{sliderMax}}" block-size="12" activeColor="#d33a31" backgroundColor="rgba(255, 255, 255, 0.2)" block-color="#fff" bindchange="sliderChange" bindtouchstart='sliderMoveStart' bindtouchmove='sliderMoveEnd'
-  />
-  <text class='total-time'>{{totalTime}}</text>
-</view>
-<view class='song-action'>
-  <icon class="iconfont {{modeList[curModeIndex].icon}}" bindtap='modeChange' />
-  <icon class="iconfont icon-pre" id='-1' bindtap='playSongChange' />
-  <icon class="iconfont {{ playStatus=== 0 ? 'icon-play ' : 'icon-paused' }}" bindtap='playStatusChange' />
-  <icon class="iconfont icon-next" id='1' bindtap='playSongChange' />
-  <icon class="iconfont icon-songlist" bindtap='showSongList' />
+<view class='operation'>
+  <!--收藏等操作  ---start -->
+  <view class='song-actions'>
+    <view class='action-item'>
+      <image src='../../assets/img/cm2_play_icn_love@2x.png' />
+    </view>
+    <view class='action-item'>
+      <image src='../../assets/img/cm2_play_icn_dld@2x.png' />
+    </view>
+    <view class='action-item'>
+      <image src='../../assets/img/cm2_play_icn_cmt_num@2x.png' />
+      <text>{{totalCountComments > 999 ? '999+': totalCountComments}}</text>
+    </view>
+    <view class='action-item'>
+      <image src='../../assets/img/cm2_play_icn_more@2x.png' />
+    </view>
+  </view>
+  <!--收藏等操作  ---end -->
+  <view class='song-progress'>
+    <text class='cur-time'>{{currentTime}}</text>
+    <slider style='width: 100%;' value="{{sliderValue}}" min="0" max="{{sliderMax}}" block-size="12" activeColor="#d33a31" backgroundColor="rgba(255, 255, 255, 0.2)" block-color="#fff" bindchange="sliderChange" bindtouchstart='sliderMoveStart' bindtouchmove='sliderMoveEnd'
+    />
+    <text class='total-time'>{{totalTime}}</text>
+  </view>
+  <view class='play-bar'>
+    <block wx:for="{{modeList}}">
+      <image src="{{item.icon}}" mode='widthFix' style='width: 88rpx' hidden="{{curModeIndex !== index}}" bindtap='modeChange' />
+    </block>
+    <image src='../../assets/img/cm2_play_btn_prev@2x.png' mode='widthFix' style='width: 98rpx' id='-1' bindtap='playMusicChange' />
+
+    <image src='../../assets/img/cm2_fm_btn_play@2x.png' mode='widthFix' style='width: 136rpx' hidden='{{playing}}' bindtap='playStatusChange' />
+    <image src='../../assets/img/cm2_fm_btn_pause@2x.png' mode='widthFix' style='width: 136rpx' hidden='{{!playing}}' bindtap='playStatusChange' />
+    <image src='../../assets/img/cm2_fm_btn_next@2x.png' mode='widthFix' style='width: 98rpx' id='1' bindtap='playMusicChange' />
+    <image src='../../assets/img/cm2_icn_list@2x.png' mode='widthFix' style='width: 88rpx' bindtap='showSongList' />
+  </view>
 </view>
 <drawer id="drawer" bind:cancel="_cancelDrawer" bind:confirm="_confirmDrawer">
   <view>

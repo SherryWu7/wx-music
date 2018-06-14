@@ -7,7 +7,8 @@
     "pages/playlist/index",
     "pages/comments/index",
     "pages/song/index",
-    "pages/categories/index"
+    "pages/categories/index",
+    "pages/rank/index"
   ],
   "window": {
     "backgroundTextStyle": "light",
