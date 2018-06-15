@@ -1,0 +1,11 @@
+<!--components/playbar/index.wxml-->
+<block wx:if="{{isShow}}">
+  <navigator class='mu-play-bar' hover-class='none' url="/pages/song/index">
+    <view class="mu-play-line-animation {{ playing ? 'running' : 'paused' }}">
+      <text class='line-1' />
+      <text class='line-2' />
+      <text class='line-3' />
+      <text class='line-4' />
+    </view>
+  </navigator>
+</block>

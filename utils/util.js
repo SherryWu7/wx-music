@@ -9,31 +9,14 @@
 //   return [year, month, day].map(formatNumber).join('/') + ' ' + [hour, minute, second].map(formatNumber).join(':')
 // }
 
-const formatTime = time => {
-  if (typeof time !== 'number' || time < 0) {
-    return time;
-  }
-  const hour = parseInt(time / 3600);
-  time = time % 3600;
-  const minute = parseInt(time / 60);
-  time = time % 60
-  const second = time;
-
-  let list = [];
-  if (hour) {
-    list.push(hour);
-  } 
-  list.push(minute, second);
-
-  return list.map(function (n) {
-    n = n.toString();
-    return n[1] ? n : '0' + n;
-  }).join(':');
+const formatNumber = n => {
+  n = n.toString();
+  return n[1] ? n : '0' + n;
 }
 
-const formatNumber = n => {
-  n = n.toString()
-  return n[1] ? n : '0' + n
+const formatTime = time => {
+  time = new Date(time);
+  return formatNumber(time.getMinutes()) + ':' + formatNumber(time.getSeconds());
 }
 
 module.exports = {

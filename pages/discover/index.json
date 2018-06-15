@@ -1,6 +1,7 @@
 {
   "backgroundColor": "#d43c33",
   "usingComponents": {
-    "song-list": "/components/songList/index"
+    "song-list": "/components/songList/index",
+    "playbar": "/components/playbar/index"
   }
 }

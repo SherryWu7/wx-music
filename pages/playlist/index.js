@@ -35,7 +35,6 @@ Page({
       },
       success: (res) => {
         if (res.data.code === 200) {
-          console.log(res.data)
           this.setData({
             playInfo: res.data.playlist
           })

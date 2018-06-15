@@ -49,6 +49,7 @@
   transform: rotate(-25deg);
   transition: all linear 0.5s;
 }
+
 .player-pointer .playing {
   transform: rotate(0);
 }
@@ -59,7 +60,7 @@
   height: 588rpx;
   margin: auto;
   animation: circling 20s infinite linear;
-   animation-play-state: paused;  
+  animation-play-state: paused;
 }
 
 .running {
@@ -101,7 +102,7 @@
 
 .circling {
   /* transform-origin: center, center; */
-   animation: circling 20s infinite linear; 
+  animation: circling 20s infinite linear;
 }
 
 .circling.running {
@@ -127,9 +128,8 @@
   left: 0;
   bottom: 0;
   z-index: 5;
-  width: 100%
+  width: 100%;
 }
-
 
 .song-actions {
   display: flex;
@@ -184,27 +184,91 @@
   padding: 0 0 30rpx;
 }
 
-.pl-action-panel {
+.play-list-container {
+  margin-top: -20rpx;
+  border-radius: 20rpx 20rpx 0 0;
+  background-color: #fff;
+}
+
+.pl-action-panel, .pl-action-panel > view {
   display: flex;
   align-items: center;
 }
 
-.pl-action-panel .iconfont {
-  color: #999;
+.pl-action-panel {
+  height: 75rpx;
+  padding: 0 20rpx 0 15rpx;
+  border-bottom: 2rpx solid #eee;
+  font-size: 28rpx;
+}
+
+.panel-mode {
+  flex: 1;
+}
+
+.pl-action-panel > view >image {
+  margin-right: 10rpx;
+}
+
+.pl-content scroll-view {
+  height: 730rpx;
+}
+
+.pl-item, .pl-item > view {
+  display: flex;
+  align-items: center;
 }
 
 .pl-item {
+  justify-content: space-between;
+  height: 80rpx;
   margin-left: 15rpx;
-  padding: 8rpx 20rpx 10rpx 0;
-  border-top: 2rpx solid #eee;
+  padding-right: 20rpx;
+  border-bottom: 2rpx solid #eee;
+}
+
+.song-volume {
+  width: 32rpx;
+  height: 32rpx;
+  margin-right: 10rpx;
+}
+
+.song-info {
+  flex: 1;
+  overflow: hidden;
+}
+
+.song-info image {
+  margin-right: 10rpx;
+}
+
+.pl-item:last-child {
+  border-bottom-width: 0;
 }
 
 .songname {
-  font-size: 28rpx;
+  font-size: 32rpx;
   color: rgba(0, 0, 0, 1);
 }
 
 .singer {
   font-size: 24rpx;
   color: rgba(0, 0, 0, 0.7);
+}
+
+.pl-item.current .songname, .pl-item.current .singer {
+  color: #d33a31;
+}
+
+.song-del, .song-link {
+  width: 56rpx;
+  height: 56rpx;
+}
+
+.pl-close {
+  height: 75rpx;
+  line-height: 75rpx;
+  text-align: center;
+  font-size: 30rpx;
+  border-top: 2rpx solid #eee;
 }

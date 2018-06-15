@@ -77,7 +77,6 @@ Page({
       url: api + '/dj/catelist',
       success: (res) => {
         if (res.data.code === 200) {
-          console.log(res.data.categories)
           this.setData({ categories: res.data.categories });
         }
       }

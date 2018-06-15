@@ -32,7 +32,6 @@ Page({
       key: 'songlistDetail',
       success: (res) => {
         this.setData({ detail: res.data });
-        console.log(res)
       },
     })
 

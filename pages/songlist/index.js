@@ -92,7 +92,6 @@ Page({
             categories
           }
           this.setData({ catObject });
-          console.log(catObject)
         }
       }
     })
@@ -105,7 +104,6 @@ Page({
       },
       success: (res) => {
         if (res.data.code === 200) {
-          console.log(res.data)
           this.setData({ highqualityTop: res.data.playlists[0] })
         }
       }
@@ -128,11 +126,9 @@ Page({
     }
   },
   _cancelDrawer: function () {
-    console.log('你点击了取消');
     this.drawer.hideDrawer();
   },
   _confirmDrawer: function () {
-    console.log('你点击了确定');
     this.drawer.hideDrawer();
   },
 
