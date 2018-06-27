@@ -1,0 +1,22 @@
+<!--pages/search/index.wxml-->
+<view>
+  <view class="input-cover">
+    <!-- <i class=""/> -->
+    <input placeholder="搜索歌曲、歌手、专辑" confirm-type="search" />
+  </view>
+  <view class="">
+    <text>歌手分类</text>
+  </view>
+  <view>
+    <view class='sr-hotlist' wx:if="{{hotList.length}}">
+      <text class='title'>热门搜索</text>
+      <view>
+      </view>
+    </view>
+    <view class='sr-history'>
+      <view class='h-item'>
+        <text class='ellipsis'>战争世界</text>
+      </view>
+    </view>
+  </view>
+</view>

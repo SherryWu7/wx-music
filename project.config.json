@@ -33,7 +33,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": -1,
+			"current": 6,
 			"list": [
 				{
 					"id": 0,
@@ -57,7 +57,7 @@
 					"id": 3,
 					"name": "播放",
 					"pathName": "pages/song/index",
-					"query": "id=27506169"
+					"query": "id=440240156"
 				},
 				{
 					"id": -1,
@@ -69,6 +69,12 @@
 					"id": -1,
 					"name": "排行榜",
 					"pathName": "pages/rank/index",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "搜索",
+					"pathName": "pages/search/index",
 					"query": ""
 				}
 			]

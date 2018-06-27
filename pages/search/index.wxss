@@ -1,0 +1,33 @@
+/* pages/search/index.wxss */
+
+.input-cover {
+  position: relative;
+  width: 100%;
+  height: 60rpx;
+  padding: 0 30rpx;
+  box-sizing: border-box;
+  background: #ebecec;
+  border-radius: 60rpx;
+  font-size: 28rpx;
+}
+
+.input-cover input {
+  height: 100%;
+}
+
+.sr-hotlist {
+}
+
+.sr-hotlist .title {
+  font-size: 24rpx;
+  line-height: 24rpx;
+  color: #666;
+}
+
+.sr-history .h-item {
+  display: flex;
+  align-items: center;
+  height: 90rpx;
+  margin-left: 20rpx;
+  border-bottom: 2rpx solid rgba(0,0,0,.1);
+}

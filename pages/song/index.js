@@ -11,20 +11,23 @@ Page({
    */
   data: {
     music: {},
-    lyricsList: [],
     songUrl: null,
-    totalCountComments: 0,  // 评论总数
+    totalCountComments: 0, // 评论总数
+
+    lyricsList: [],
+    lyricsUser: {},
+    showLyric: false,
+    curLrcIndex: 0, // 当前播放的歌词index
 
     currentTime: '00:00',
-    duration: '00:00',  // 总时长
+    duration: '00:00', // 总时长
     sliderValue: 0,
     sliderMax: 0,
-    isMovingSlider: false,  // 手动拖动触发slider更新
+    isMovingSlider: false, // 手动拖动触发slider更新
 
     share: {},
 
-    modeList: [
-      {
+    modeList: [{
         id: 1,
         name: '列表循环',
         icon: '../../assets/img/cm2_icn_loop@2x.png',
@@ -43,8 +46,8 @@ Page({
         icon2: '../../assets/img/cm2_playlist_icn_shuffle@2x.png'
       }
     ],
-    playMode: 1,  // 循环类型
-    playing: false,  // 是否正在播放
+    playMode: 1, // 循环类型
+    playing: false, // 是否正在播放
 
     curPlayList: []
   },
@@ -52,7 +55,9 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {
+  onLoad: function(options) {
+    this.getSongLyric(options.id)
+
     this.setData({
       playing: app.globalData.playing,
       curPlayList: app.globalData.list_song,
@@ -83,11 +88,20 @@ Page({
     }
   },
 
-  onShow: function () {
+  onShow: function() {
     // 背景音频播放进度更新事件
     backgroundAudioManager.onTimeUpdate(() => {
-      console.log(this.data.sliderValue, this.data.Ma)
+      let curLrcIndex = 0;
+      if (this.data.showLyric) {
+        for (let i in this.data.lyricsList) {
+          const item = this.data.lyricsList[i];
+          if (item.lrc_sec <= backgroundAudioManager.currentTime) {
+            curLrcIndex = i;
+          }
+        }
+      }
       this.setData({
+        curLrcIndex,
         sliderValue: Math.floor(backgroundAudioManager.currentTime * 1000),
         currentTime: util.formatTime(Math.floor(backgroundAudioManager.currentTime * 1000)),
       });
@@ -97,11 +111,11 @@ Page({
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
-  onReady: function () {
+  onReady: function() {
     this.drawer = this.selectComponent('#drawer');
   },
 
-  playMusic: function (id) {
+  playMusic: function(id) {
     wx.request({
       url: api + '/song/detail',
       data: {
@@ -109,7 +123,7 @@ Page({
       },
       success: (res) => {
         if (res.data.code === 200) {
-          app.globalData.curPlaying = res.data.songs[0];  // 全局设置当前播放歌曲
+          app.globalData.curPlaying = res.data.songs[0]; // 全局设置当前播放歌曲
           if (!app.globalData.list_song.length) {
             app.globalData.list_song.push(res.data.songs[0]);
           }
@@ -147,7 +161,7 @@ Page({
   /**
    * 获取歌词
    */
-  getSongLyric: function (id) {
+  getSongLyric: function(id) {
     wx.request({
       url: api + '/lyric',
       data: {
@@ -170,37 +184,50 @@ Page({
               let value = data.substring(index + 1);
               let timeString = time.substring(1, time.length - 2);
               let timeArr = timeString.split(':');
-              lyricsList.push([parseInt(timeArr[0], 10) * 60 + parseFloat(timeArr[1]), value]);
+              if (value) {
+                lyricsList.push({
+                  lrc: value,
+                  lrc_sec: parseInt(timeArr[0], 10) * 60 + parseFloat(timeArr[1])
+                })
+              }
             }
           }
-          this.setData({ lyricsList });
+          this.setData({
+            lyricsList,
+            lyricsUser: res.data.lyricUser
+          });
           console.log(lyricsList)
         }
       }
     })
   },
 
-  sliderChange: function (e) {
+  sliderChange: function(e) {
     const position = e.detail.value;
     app.seekAudio(position, this);
   },
-  sliderMoveStart: function () {
+  sliderMoveStart: function() {
     this.setData({
       isMovingSlider: true
     });
   },
-  sliderMoveEnd: function () {
+  sliderMoveEnd: function() {
     this.setData({
       isMovingSlider: false
     });
   },
   // 切换播放类型
-  modeChange: function () {
-    let { playMode, modeList } = this.data;
+  modeChange: function() {
+    let {
+      playMode,
+      modeList
+    } = this.data;
     playMode++;
     playMode = playMode > (modeList.length) ? 1 : playMode;
     app.globalData.playMode = playMode;
-    this.setData({ playMode });
+    this.setData({
+      playMode
+    });
 
     wx.showToast({
       title: modeList[playMode - 1].name,
@@ -209,8 +236,10 @@ Page({
     });
   },
   //播放or暂停
-  playStatusChange: function () {
-    let { playing } = this.data;
+  playStatusChange: function() {
+    let {
+      playing
+    } = this.data;
     if (playing) {
       backgroundAudioManager.pause();
       playing = false;
@@ -219,27 +248,33 @@ Page({
       playing = true;
     }
     app.globalData.playing = playing;
-    this.setData({ playing });
+    this.setData({
+      playing
+    });
   },
   // 上、下一首
-  playMusicChange: function (event) {
+  playMusicChange: function(event) {
     const value = parseInt(event.currentTarget.id);
     app.nextAudio(value, this);
   },
 
-  showPlayList: function () {
+  showPlayList: function() {
     this.drawer.showDrawer();
   },
 
-  selectedMusic: function (event) {
+  selectedMusic: function(event) {
     const index = parseInt(event.currentTarget.dataset.index);
     const id = parseInt(event.currentTarget.id);
-    let { song_list, curPlaying, backgroundAudioManager } = app.globalData;
+    let {
+      song_list,
+      curPlaying,
+      backgroundAudioManager
+    } = app.globalData;
     if (id !== curPlaying.id) {
       app.globalData.index_song = index;
       this.playMusic(id);
     } else {
-      const pauseStatus = backgroundAudioManager.paused;  // 是否处于暂停状态
+      const pauseStatus = backgroundAudioManager.paused; // 是否处于暂停状态
       if (pauseStatus) {
         backgroundAudioManager.play();
       }
@@ -247,16 +282,19 @@ Page({
     this.drawer.hideDrawer();
 
   },
-  _cancelDrawer: function () {
+  _cancelDrawer: function() {
     this.drawer.hideDrawer();
   },
-  _confirmDrawer: function () {
+  _confirmDrawer: function() {
     this.drawer.hideDrawer();
   },
   // 删除单曲
-  delMusicByIndex: function (event) {
+  delMusicByIndex: function(event) {
     const index = parseInt(event.currentTarget.dataset.index);
-    let { list_song, index_song } = app.globalData;
+    let {
+      list_song,
+      index_song
+    } = app.globalData;
     list_song.splice(index, 1);
     if (index_song === index) {
       backgroundAudioManager.stop();
@@ -271,7 +309,7 @@ Page({
   /**
    * 清空播放列表，完成后后退
    */
-  deleteAll: function () {
+  deleteAll: function() {
     wx.showModal({
       title: '',
       content: '确定要清空播放列表？',
@@ -280,7 +318,9 @@ Page({
           app.globalData.list_song = [];
           app.globalData.index_song = 0;
           app.globalData.curPlaying = {};
-          this.setData({ curPlayList: [] });
+          this.setData({
+            curPlayList: []
+          });
           backgroundAudioManager.stop();
           wx.navigateBack();
         } else if (res.cancel) {
@@ -288,7 +328,11 @@ Page({
         }
       }
     })
+  },
+  playerChange: function() {
+    let showLyric = this.data.showLyric;
+    this.setData({
+      showLyric: !showLyric
+    })
   }
-
-
 })

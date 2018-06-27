@@ -1,0 +1,7 @@
+<!--components/customNavigation/index.wxml-->
+<view>
+  <view></view>
+  <view>
+    <input placeholder="给你推荐" />
+  </view>
+</view>

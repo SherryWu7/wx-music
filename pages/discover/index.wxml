@@ -5,6 +5,9 @@
       <text>{{item.name}}</text>
     </view>
   </block>
+  <!-- <navigator hover-class='none' url=''>
+    <text>搜索</text>
+  </navigator> -->
 </view>
 <view style='height: 80rpx; background-color: #d43c33;'></view>
 <playbar/>

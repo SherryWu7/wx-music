@@ -164,6 +164,7 @@ App({
     list_song: [],  // 歌曲播放列表
     index_song: 0,  // 当前播放歌曲在播放列表中的index
     curPlaying: {},  // 当前播放歌曲
+    currentTime: '00:00',  // 当前歌曲播放到什么时间
     playMode: 1,  // 播放类型 【1 列表循环  2 单曲循环  3 随机播放】
     playing: false,  // 是否正在播放
     backgroundAudioManager: wx.getBackgroundAudioManager(),

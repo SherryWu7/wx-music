@@ -1,25 +1,37 @@
 <!--pages/song/index.wxml-->
 <view class='song-bg' style='background-image: url("//music.163.com/api/img/blur/{{music.al.pic_str || music.al.pic}}"); opacity: 1'></view>
-<view class='player'>
-  <view class='player-pointer'>
-    <image class='{{ playing ? "playing" : "" }}' src='../../assets/img/cm2_play_needle_play-ip6@2x.png' mode='widthFix' />
+<view bindtap="playerChange">
+  <view class='player' hidden='{{showLyric}}'>
+    <view class='player-pointer'>
+      <image class='{{ playing ? "playing" : "" }}' src='../../assets/img/cm2_play_needle_play-ip6@2x.png' />
+    </view>
+    <view class='player-disc {{ playing ? "running" : "paused" }}'>
+      <view class='song-disc'>
+        <image src='../../assets/img/disc.png' mode='widthFix' />
+      </view>
+      <view class='song-cover'>
+        <image class='default-cover' src='../../assets/img/cm2_default_cover_play-ip6@2x.jpg' mode='widthFix' hidden='{{music.al.picUrl}}' />
+        <image src='{{music.al.picUrl}}'></image>
+      </view>
+      <view class='song-light'>
+        <image src='../../assets/img/disc_light-ip6.png' mode='widthFix' />
+      </view>
+    </view>
   </view>
-  <view class='player-disc {{ playing ? "running" : "paused" }}'>
-    <view class='song-disc'>
-      <image src='../../assets/img/disc.png' mode='widthFix' />
-    </view>
-    <view class='song-cover'>
-      <image class='default-cover' src='../../assets/img/cm2_default_cover_play-ip6@2x.jpg' mode='widthFix' hidden='{{music.al.picUrl}}' />
-      <image src='{{music.al.picUrl}}' mode="widthFix"></image>
-    </view>
-    <view class='song-light'>
-      <image src='../../assets/img/disc_light-ip6.png' mode='widthFix' />
+  <view class='lyric' hidden='{{!showLyric}}'>
+    <view class='lyric-cont'>
+      <view class='lyric-list' style='transform: translateY(-{{curLrcIndex*75}}rpx)'>
+        <block wx:for="{{lyricsList}}" wx:key="{{index}}">
+          <view class='{{curLrcIndex == index ? "current" : ""}}' style='{{index == curLrcIndex - 6 || index == curLrcIndex - (-6) ? " opacity: 0.2;" : ""}}'>{{item.lrc}}</view>
+        </block>
+        <view style='margin-top: 30rpx' wx:if="{{lyricsUser.nickname}}">歌词贡献者:{{lyricsUser.nickname}}</view>
+      </view>
     </view>
   </view>
 </view>
 <view class='operation'>
   <!--收藏等操作  ---start -->
-  <view class='song-actions'>
+  <view class='song-actions' hidden='{{showLyric}}'>
     <view class='action-item'>
       <image src='../../assets/img/cm2_play_icn_love@2x.png' />
     </view>

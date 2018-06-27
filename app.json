@@ -8,7 +8,8 @@
     "pages/comments/index",
     "pages/song/index",
     "pages/categories/index",
-    "pages/rank/index"
+    "pages/rank/index",
+    "pages/search/index"
   ],
   "window": {
     "backgroundTextStyle": "light",
