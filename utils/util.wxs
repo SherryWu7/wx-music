@@ -1,16 +1,38 @@
-var formatPlayCount = function (count) {
+var formatPlayCount = function(count) {
   var minNumber = 99999;
   var maxNumber = 99999999
   var formatCount = count;
   if (count && count > minNumber) { // 10万或10万以上
     formatCount = (count / 10000).toFixed(1) + '万';
-    if (count > maxNumber){
+    if (count > maxNumber) {
       formatCount = (count / 100000000).toFixed(1) + '亿';
     }
   }
   return formatCount;
 }
 
+var trim = function(str) {
+  var reg = getRegExp('(^\s*)|(\s*$)', 'g');
+  return str.replace(reg, '');
+}
+
+var trim = function (str) {
+  var reg = getRegExp('(^\s*)|(\s*$)', 'g');
+  return str.replace(reg, '');
+}
+
+/**
+ * 格式化搜索结果
+ * 关键词高亮
+ */
+var formatSearchRes = function (str, key) {
+  var keyWord = '';
+  if (key) keyWord = trim(key);
+  return str.replace(getRegExp(keyWord, 'g'), '%%' + keyWord + '%%').split('%%');
+} 
+
 module.exports = {
   formatPlayCount: formatPlayCount,
+  trim: trim,
+  formatSearchRes: formatSearchRes
 }

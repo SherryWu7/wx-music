@@ -1,21 +1,76 @@
 <!--pages/search/index.wxml-->
+<wxs src="../../utils/util.wxs" module="util"></wxs>
 <view>
   <view class="input-cover">
     <!-- <i class=""/> -->
-    <input placeholder="搜索歌曲、歌手、专辑" confirm-type="search" />
+    <input placeholder="搜索歌曲、歌手、专辑" value='{{searchValue}}' confirm-type="search" bindinput="valueChange" bindconfirm="search" bindfocus="inputFocus" />
   </view>
   <view class="">
-    <text>歌手分类</text>
   </view>
   <view>
-    <view class='sr-hotlist' wx:if="{{hotList.length}}">
+    <view class='sr-hotlist' wx:if="{{hotList.length && !searchValue&& !resultList.length}}">
       <text class='title'>热门搜索</text>
-      <view>
+      <view class='hot-list'>
+        <view wx:for="{{hotList}}" wx:key="{{index}}" data-name="{{item.first}}" bindtap='searchValueChange' class='hot-item'>{{item.first}}</view>
       </view>
     </view>
-    <view class='sr-history'>
-      <view class='h-item'>
-        <text class='ellipsis'>战争世界</text>
+    <view class='sr-history' wx:if="{{historyList.length && !searchValue&& !resultList.length}}">
+      <view wx:for="{{historyList}}" wx:key="{{index}}" data-name="{{item}}" bindtap='searchValueChange' class='h-item'>
+        <image src='../../assets/img/cm2_list_search_time@2x.png' style='width: 32rpx; height: 32rpx;' />
+        <text class='ellipsis'>{{item}}</text>
+        <image data-name="{{item}}" catchtap='delHistory' src='../../assets/img/cm2_list_search_dlt@2x.png' style='width: 24rpx; height: 24rpx;' />
+      </view>
+    </view>
+    <view class='sr-recom' wx:if="{{searchValue && !resultList.length}}">
+      <text class='title ellipsis'>搜索“{{searchValue}}”</text>
+      <view>
+        <view class='re-item' wx:for="{{recomList}}" wx:key="{{index}}" data-name="{{item.keyword}}" bindtap='searchValueChange'>
+          <image src='../../assets/img/cm2_list_icn_search@2x.png' style='width: 24rpx; height: 24rpx;'></image>
+          <text class='ellipsis'>{{item.keyword}}</text>
+        </view>
+      </view>
+    </view>
+    <view class='sr-search-result' wx:if="{{resultList.length}}">
+      <scroll-view scroll-x class='res-type'>
+        <block wx:for="{{searchType}}" wx:key="{{item.id}}">
+          <view id="{{item.id}}" class="t-item {{curSearchType === item.id ? 'current' : ''}}" bindtap='searchTypeChange'>{{item.name}}</view>
+        </block>
+      </scroll-view>
+      <view>
+        <block wx:for="{{resultList}}" wx:key="{{index}}">
+          <navigator class='res-item'>
+            <view class='item-bd'>
+              <view class='bd-fl'>
+                <view class='sgtl ellipsis'>
+                  <block wx:for="{{util.formatSearchRes(item.name,searchValue)}}" wx:for-item="h" wx:for-index="hIdx" wx:key="{{hIdx}}">
+                    <text class="{{h == util.trim(searchValue) ? 'highlight' : '' }}">{{h}}</text>
+                  </block>
+                </view>
+                <view class='sginfo ellipsis'>
+                  <block wx:for="{{item.artists || []}}" wx:for-item="ar" wx:for-index="arIdx" wx:key="{{arIdx}}">
+                    <block wx:for="{{util.formatSearchRes(ar.name,searchValue)}}" wx:for-item="h" wx:for-index="hIdx" wx:key="{{hIdx}}">
+                      <text class="{{h == util.trim(searchValue) ? 'highlight' : '' }}">{{h}}</text>
+                    </block>
+                    <block wx:if="{{arIdx!=(item.ar.length-1)}}">/</block>
+                  </block>-
+                  <block wx:for="{{util.formatSearchRes(item.album.name,searchValue)}}" wx:for-item="h" wx:for-index="hIdx" wx:key="{{hIdx}}">
+                    <text class="{{h == util.trim(searchValue) ? 'highlight' : '' }}">{{h}}</text>
+                  </block>
+                </view>
+              </view>
+              <view class='bd-fr'>
+                <block wx:if="{{item.mv}}">
+                  <navigator class='sgmv'>
+                    <image src='../../assets/img/cm4_list_tag_mv@2x.png' />
+                  </navigator>
+                </block>
+                <view class='sgmore'>
+                  <image src='../../assets/img/cm4_list_icn_more@2x.png' />
+                </view>
+              </view>
+            </view>
+          </navigator>
+        </block>
       </view>
     </view>
   </view>

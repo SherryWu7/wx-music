@@ -15,13 +15,27 @@
   height: 100%;
 }
 
-.sr-hotlist {
-}
-
 .sr-hotlist .title {
   font-size: 24rpx;
   line-height: 24rpx;
+  margin-left: 20rpx;
   color: #666;
+}
+
+.sr-hotlist .hot-list {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.sr-hotlist .hot-item {
+  height: 60rpx;
+  line-height: 60rpx;
+  margin: 0 0 20rpx 20rpx;
+  padding: 0 28rpx;
+  font-size: 26rpx;
+  border: 2rpx solid #d3d4da;
+  border-radius: 60rpx;
+  color: #333;
 }
 
 .sr-history .h-item {
@@ -29,5 +43,112 @@
   align-items: center;
   height: 90rpx;
   margin-left: 20rpx;
-  border-bottom: 2rpx solid rgba(0,0,0,.1);
+  padding-right: 25rpx;
+  font-size: 28rpx;
+  border-bottom: 2rpx solid #eee;
+}
+
+.sr-history .h-item text {
+  flex: 1;
+  padding-left: 25rpx;
+}
+
+.sr-recom > text {
+  display: flex;
+  width: 100%;
+  height: 80rpx;
+  margin: 0 20rpx;
+  line-height: 80rpx;
+  font-size: 30rpx;
+  color: #507daf;
+  border-bottom: 2rpx solid #eee;
+}
+
+.sr-recom .re-item {
+  display: flex;
+  align-items: center;
+  height: 90rpx;
+  margin-left: 20rpx;
+  font-size: 28rpx;
+}
+
+.sr-recom .re-item text {
+  width: 100%;
+  line-height: 90rpx;
+  margin-left: 25rpx;
+  padding-right: 25rpx;
+  border-bottom: 2rpx solid #eee;
+}
+
+.res-type {
+  width: 100%;
+  background-color: #d43c33;
+  white-space: nowrap;
+}
+
+.res-type .t-item {
+  height: 70rpx;
+  line-height: 70rpx;
+  display: inline-block;
+  margin: 0 58rpx;
+  font-size: 26rpx;
+  font-weight: 300;
+  color: #fff;
+}
+
+.res-type .t-item.current {
+  position: relative;
+  display: inline-block;
+  font-weight: 500;
+}
+
+.res-type .t-item.current::after {
+  content: '';
+  display: block;
+  width: 100%;
+  position: absolute;
+  left: 50%;
+  bottom: 10rpx;
+  transform: translateX(-50%);
+  border-top: 6rpx solid #fff;
+  border-radius: 10rpx;
+}
+
+.sr-search-result .res-item {
+  padding-left: 20rpx;
+}
+
+.res-item .item-bd {
+  display: flex;
+  border-bottom: 2rpx solid #eee;
+}
+
+.res-item .bd-fl {
+  width: 0;
+  flex: 1 1 auto;
+  padding: 10rpx 0;
+}
+
+.res-item .bd-fr {
+  display: flex;
+  align-items: center;
+  padding: 0 20rpx;
+}
+
+.res-item .sgtl {
+  font-size: 34rpx;
+}
+
+.highlight {
+  color: #507daf;
+}
+
+.res-item .sginfo {
+  font-size: 24rpx;
+  color: #888;
+}
+
+.sgmv, .sgmv image, .sgmore, .sgmore image {
+  width: 56rpx;
+  height: 56rpx;
 }

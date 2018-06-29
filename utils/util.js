@@ -19,6 +19,11 @@ const formatTime = time => {
   return formatNumber(time.getMinutes()) + ':' + formatNumber(time.getSeconds());
 }
 
+const trim = (str) => {
+  return str.replace(/(^\s *)| (\s * $)/g, '');
+}
+
 module.exports = {
-  formatTime: formatTime
+  formatTime: formatTime,
+  trim: trim
 }
