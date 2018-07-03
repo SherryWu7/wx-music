@@ -1,5 +1,4 @@
 /* pages/discover/index.wxss */
-
 .top-nav {
   position: fixed;
   left: 0;

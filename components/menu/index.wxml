@@ -1,0 +1,15 @@
+<!--components/menu/index.wxml-->
+<view style="height: {{showSearch ? '140' : '80'}}rpx;">
+  <view class='mu-menus'>
+    <navigator wx:if="{{showSearch}}" class='mu-search-bar' hover-class='none' url='/pages/search/index'>
+      <input placeholder="搜索歌曲、歌手、专辑" disabled placeholder-class="input-placeholder" />
+    </navigator>
+    <scroll-view scroll-x class='mu-menu'>
+      <block wx:for="{{datasource}}" wx:key="{{index}}">
+        <view data-index="{{index}}" data-item="{{item}}" style="{{menuItemStyle}}" class="mu-menu-item {{item.id==selectedId ? 'selected' : ''}}" bindtap='onSelect'>
+          <text>{{item.name}}</text>
+        </view>
+      </block>
+    </scroll-view>
+  </view>
+</view>

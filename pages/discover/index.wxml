@@ -1,15 +1,5 @@
 <import src="../template/loading.wxml" />
-<view class='top-nav'>
-  <block wx:for='{{navList}}' wx:key='{{index}}'>
-    <view data-index='{{index}}' bindtap='navChange' class='top-nav-item {{curNavIndex===index ? "selected" : ""}}'>
-      <text>{{item.name}}</text>
-    </view>
-  </block>
-  <!-- <navigator hover-class='none' url=''>
-    <text>搜索</text>
-  </navigator> -->
-</view>
-<view style='height: 80rpx; background-color: #d43c33;'></view>
+<menu datasource="{{navList}}" selectedId="{{navList[curNavIndex].id}}" bindselect="menuChange"/>
 <playbar/>
 <block wx:if="{{navList[curNavIndex].loading}}">
   <template is='loading' data="{{ text: '正在加载...', size: 'large' }}" />
@@ -21,7 +11,7 @@
     <swiper indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" class='slide'>
       <block wx:for="{{banners}}" wx:key="{{index}}">
         <swiper-item>
-          <image src="{{item.picUrl}}" class="slide-image" mode="widthFix" />
+          <image src="{{item.picUrl || item.pic}}" class="slide-image" mode="widthFix" />
         </swiper-item>
       </block>
     </swiper>

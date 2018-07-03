@@ -1,0 +1,65 @@
+/* components/menu/index.wxss */
+
+.mu-menus {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  width: 100%;
+  background-color: #d43c33;
+}
+
+.mu-menu {
+  width: 100%;
+  white-space: nowrap;
+}
+
+.mu-menu-item {
+  height: 80rpx;
+  line-height: 75rpx;
+  display: inline-block;
+  text-align: center;
+  padding: 0 40rpx;
+  font-size: 26rpx;
+  font-weight: 300;
+  color: #fff;
+}
+
+.mu-menu-item.selected text {
+  position: relative;
+  display: inline-block;
+  font-weight: 500;
+}
+
+.mu-menu-item.selected text::after {
+  content: '';
+  display: block;
+  width: 100%;
+  position: absolute;
+  left: 50%;
+  bottom: 10rpx;
+  transform: translateX(-50%);
+  border-top: 6rpx solid #fff;
+  border-radius: 10rpx;
+}
+
+.mu-search-bar {
+  position: relative;
+  height: 60rpx;
+  padding: 0 30rpx;
+  margin: 0 20rpx;
+  box-sizing: border-box;
+  background-color: rgba(255, 255, 255, 0.3);
+  border-radius: 60rpx;
+  font-size: 28rpx;
+}
+
+.input-placeholder {
+  color: rgba(255, 255, 255, 0.5);
+  font-weight: 300;
+}
+
+.mu-search-bar input {
+  height: 100%;
+  color: #fff;
+}

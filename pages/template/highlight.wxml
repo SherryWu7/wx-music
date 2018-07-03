@@ -1,0 +1,6 @@
+<wxs src="../../utils/util.wxs" module="util"></wxs>
+<template name="highlight">
+  <block wx:for="{{util.formatSearchRes(str, key)}}" wx:for-item="h" wx:for-index="hIdx" wx:key="{{hIdx}}">
+    <text class="{{h == util.trim(key) ? 'highlight' : '' }}">{{h}}</text>
+  </block>
+</template>

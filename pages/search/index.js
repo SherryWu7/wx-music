@@ -12,10 +12,10 @@ Page({
     historyList: [],
     recomList: [],
     searchValue: '',
-    curSearchType: 1,
     searchType: [{
         id: 1,
         name: '单曲',
+        totalCount: 0,
         result: [],
         filter: {
           pageNumber: 1,
@@ -24,8 +24,9 @@ Page({
         },
       },
       {
-        id: 1006,
+        id: 1014,
         name: '视频',
+        totalCount: 0,
         result: [],
         filter: {
           pageNumber: 1,
@@ -36,6 +37,7 @@ Page({
       {
         id: 100,
         name: '歌手',
+        totalCount: 0,
         result: [],
         filter: {
           pageNumber: 1,
@@ -46,6 +48,7 @@ Page({
       {
         id: 10,
         name: '专辑',
+        totalCount: 0,
         result: [],
         filter: {
           pageNumber: 1,
@@ -56,6 +59,7 @@ Page({
       {
         id: 1000,
         name: '歌单',
+        totalCount: 0,
         result: [],
         filter: {
           pageNumber: 1,
@@ -66,6 +70,7 @@ Page({
       {
         id: 1009,
         name: '主播电台',
+        totalCount: 0,
         result: [],
         filter: {
           pageNumber: 1,
@@ -76,6 +81,7 @@ Page({
       {
         id: 1002,
         name: '用户',
+        totalCount: 0,
         result: [],
         filter: {
           pageNumber: 1,
@@ -84,7 +90,10 @@ Page({
         },
       }
     ],
+    curTypeIndex: 0,
     resultList: [],
+    loading: false,
+    isShowResult: false,  // 是否展示搜索结果
   },
 
   /**
@@ -104,54 +113,88 @@ Page({
     this.getSearchHistory();
   },
 
-  search: function() {
+  onReachBottom: function() { // 上拉加载更多
+    let {
+      searchType,
+      curTypeIndex
+    } = this.data;
+    let current = searchType[curTypeIndex];
+    if (current.lastPage) {
+      return;
+    }
+    current.filter.pageNumber++;
+    current.filter.offset = (current.filter.pageNumber - 1) * current.filter.limit;
+    this.setData({
+      searchType
+    }, () => {
+      this.search();
+    });
+  },
+
+  search: function(value) { // 搜索【单曲，mv....】
     let {
       searchType,
       resultList,
-      searchValue,
-      curSearchType
+      curTypeIndex,
     } = this.data;
+    let current = searchType[curTypeIndex];
+    if (value && value !== this.data.searchValue) { // 两次搜索不是同一个关键词，清空result
+      current.result = [];
+    }
     this.setData({
       loading: true
     });
-    let current = {},
-      curTypeIndex = 0;
-    for (let i in searchType) {
-      if (searchType[i].id === curSearchType) {
-        current = searchType[i];
-        curTypeIndex = i;
-      }
-    }
+    let searchValue = value || this.data.searchValue;
     wx.request({
       url: api + '/search',
       data: {
         offset: current.filter.offset,
         limit: current.filter.limit,
         keywords: searchValue,
-        type: curSearchType,
+        type: current.id,
       },
-      success: (res) => {
+      complete: (res) => {
         this.setData({
           loading: false
         });
         this.setSearchHistory(searchValue);
-        if (res.data.code === 200) {
-          current.filter.pageNumber++;
-          current.filter.offset = (current.filter.pageNumber - 1) * current.filter.limit;
-          const list = res.data.result.songs || [];
-          const result = [...current.result, ...list];
-          current.result = list;
+        if (res.data && res.data.code === 200) {
+          let result = current.result, list;
+
+          if (current.id === 1) {  // 单曲
+            list = res.data.result.songs;
+          } else if (current.id === 1014) {  // mv
+            list = res.data.result.videos;
+          } else if (current.id === 100) {  // 歌手
+            list = res.data.result.artists;
+          } else if (current.id === 10) {  // 专辑
+            list = res.data.result.albums;
+          } else if (current.id === 1000) {  // 歌单
+            list = res.data.result.playlists;
+          } else if (current.id === 1009) {  // 主播电台
+            list = res.data.result.djRadios;
+          } else if (current.id === 1002) {  // 用户
+            list = res.data.result.userprofiles;
+          }
+
+          if (list) {
+            result = [...current.result, ...list];
+            current.result = result;
+          } else { // 最后一页
+            current.lastPage = true;
+          }
           searchType[curTypeIndex] = current;
           this.setData({
+            searchValue,
             searchType,
-            resultList: result
+            isShowResult: true
           });
         }
       }
-    })
+    });
   },
 
-  searchKeyword: function(value) {
+  searchKeyword: function(value) { // 搜索建议【根据输入返回相应关键词】
     wx.request({
       url: api + '/search/suggest/keyword',
       data: {
@@ -160,41 +203,42 @@ Page({
       success: (res) => {
         if (res.data.code === 200) {
           this.setData({
+            searchValue: value,
             recomList: res.data.result.allMatch
           });
         }
       }
     })
   },
-  valueChange: function(event) {
-    const value = event.detail.value;
+
+  inputValueChange: function(e) { // 搜索框值改变
+    const value = e.detail.value;
     this.setData({
       searchValue: value
     });
-    clearTimeout(timer); // 清除未执行的代码，重置回初始化状态
+    clearTimeout(timer);
     timer = setTimeout(() => {
       this.searchKeyword(value);
     }, 500);
   },
-  inputFocus: function(event) {
-    const value = event.detail.value;
-    if (this.data.resultList.length) {
+  inputFocus: function(e) { // 搜索框聚焦
+    const value = e.detail.value;
+    if (this.data.isShowResult) {
       this.setData({
-        resultList: []
+        isShowResult: false
       }, () => {
         this.searchKeyword(value)
       });
     }
   },
-  searchValueChange: function(event) {
-    const value = event.currentTarget.dataset.name;
-    this.setData({
-      searchValue: value
-    }, () => this.search());
+  inputBlur: function(e) {
   },
-  searchTypeChange: function(event) {
+  searchValueChange: function(e) {
+    this.search(e.currentTarget.dataset.name)
+  },
+  searchTypeChange: function(e) {
     this.setData({
-      curSearchType: parseInt(event.currentTarget.id)
+      curTypeIndex: parseInt(e.currentTarget.dataset.index)
     }, () => {
       this.search();
     });
@@ -234,5 +278,5 @@ Page({
       key: 'search_history',
       data: list,
     });
-  }
+  },
 })

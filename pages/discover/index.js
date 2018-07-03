@@ -7,8 +7,7 @@ Page({
    */
   data: {
     curNavIndex: 0,
-    navList: [
-      {
+    navList: [{
         id: 1,
         name: '个性推荐',
         loading: true
@@ -24,8 +23,7 @@ Page({
     autoplay: true,
     interval: 5000,
     duration: 1000,
-    recommendList: [
-      {
+    recommendList: [{
         id: 1,
         name: '私人FM',
         icon: '../../assets/img/cm4_disc_topbtn_fm@2x.png',
@@ -50,14 +48,14 @@ Page({
         url: '',
       },
     ],
-    today: (new Date()).getDate(),  // 今天几号
-    recommend: [],  // 个性推荐下的【推荐歌单】【最新音乐】【主播电台】
+    today: (new Date()).getDate(), // 今天几号
+    recommend: [], // 个性推荐下的【推荐歌单】【最新音乐】【主播电台】
 
-    remdDJList: [],  // 推荐电台
-    categories: [],  // 分类
+    remdDJList: [], // 推荐电台
+    categories: [], // 分类
   },
 
-  getRecommendDJ: function () {
+  getRecommendDJ: function() {
     wx.request({
       url: api + '/dj/recommend',
       data: {
@@ -66,18 +64,22 @@ Page({
       success: (res) => {
         if (res.data.code === 200) {
           let list = res.data.djRadios;
-          this.setData({ remdDJList: list.slice(0, 6) });
+          this.setData({
+            remdDJList: list.slice(0, 6)
+          });
         }
       }
     })
   },
 
-  getCategories: function () {
+  getCategories: function() {
     wx.request({
       url: api + '/dj/catelist',
       success: (res) => {
         if (res.data.code === 200) {
-          this.setData({ categories: res.data.categories });
+          this.setData({
+            categories: res.data.categories
+          });
         }
       }
     })
@@ -86,35 +88,36 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {
-  },
+  onLoad: function(options) {},
 
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function () {
+  onShow: function() {
     this.init();
   },
 
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
-  onPullDownRefresh: function () {
+  onPullDownRefresh: function() {
 
   },
 
   /**
    * 页面上拉触底事件的处理函数
    */
-  onReachBottom: function () {
+  onReachBottom: function() {
 
   },
 
   /**
    * 首次进入页面，获取个性推荐下的所有数据
    */
-  init: function () {
-    let { navList } = this.data;
+  init: function() {
+    let {
+      navList
+    } = this.data;
     // 获取【banner】
     wx.request({
       url: api + '/banner',
@@ -181,34 +184,42 @@ Page({
     Promise.all([remdSong, newSong, dj])
       .then(result => {
         navList[0].loading = false;
-        this.setData({ navList, recommend: result });
+        this.setData({
+          navList,
+          recommend: result
+        });
       })
       .catch(e => console.log(e));
   },
   /**
    * 获取主播电台下的所有数据
    */
-  djInit: function () {
-    let { navList } = this.data;
+  djInit: function() {
+    let {
+      navList
+    } = this.data;
     const dj = new Promise((resolve, reject) => {
-      wx.request({
-        url: api + '/dj/recommend',
-        data: {
-          limit: 6
-        },
-        success: (res) => {
-          if (res.data.code === 200) {
-            let list = res.data.djRadios;
-            resolve(list.slice(0, 6));
-            return;
+        wx.request({
+          url: api + '/dj/recommend',
+          data: {
+            limit: 6
+          },
+          success: (res) => {
+            if (res.data.code === 200) {
+              let list = res.data.djRadios;
+              resolve(list.slice(0, 6));
+              return;
+            }
+            resolve([]);
           }
-          resolve([]);
-        }
+        })
       })
-    })
       .then(result => {
         navList[1].loading = false;
-        this.setData({ navList, remdDJList: result });
+        this.setData({
+          navList,
+          remdDJList: result
+        });
       });
 
     // Promise.all([dj])
@@ -217,9 +228,11 @@ Page({
     //   this.setData({ navList, remdDJList: result[0] });
     // });
   },
-  navChange: function (event) {
-    const index = parseInt(event.currentTarget.dataset.index);
-    this.setData({ curNavIndex: index });
+  menuChange: function(e) {
+    const index = parseInt(e.detail.index);
+    this.setData({
+      curNavIndex: index
+    });
     if (index === 1 && this.data.navList[1].loading) {
       this.djInit();
     }

@@ -27,9 +27,9 @@
     </view>
   </view>
   <song-list list="{{songList}}" item-count="2"></song-list>
-  <block hidden="{{!loading}}">
+  <view hidden="{{!loading}}">
     <template is='loading' />
-  </block>
+  </view>
 </view>
 
 <drawer height="100%" id="drawer" bind:cancel="_cancelDrawer" bind:confirm="_confirmDrawer">
