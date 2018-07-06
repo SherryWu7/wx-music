@@ -10,3 +10,11 @@
 
 
 ### 效果
+![首页个性推荐](https://github.com/SherryMua/wx-music/blob/master/screen/WechatIMG47.jpeg)
+![首页主播电台](https://github.com/SherryMua/wx-music/blob/master/screen/WechatIMG48.jpeg)
+![电台分类](https://github.com/SherryMua/wx-music/blob/master/screen/WechatIMG49.jpeg)
+![搜索](https://github.com/SherryMua/wx-music/blob/master/screen/WechatIMG50.jpeg)
+![搜索](https://github.com/SherryMua/wx-music/blob/master/screen/WechatIMG51.jpeg)
+![搜索](https://github.com/SherryMua/wx-music/blob/master/screen/WechatIMG52.jpeg)
+![搜索](https://github.com/SherryMua/wx-music/blob/master/screen/WechatIMG53.jpeg)
+![搜索](https://github.com/SherryMua/wx-music/blob/master/screen/WechatIMG54.jpeg)
