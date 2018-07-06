@@ -1,5 +1,5 @@
 <import src="../template/loading.wxml" />
-<menu datasource="{{navList}}" selectedId="{{navList[curNavIndex].id}}" bindselect="menuChange"/>
+<menu datasource="{{navList}}" selectedId="{{navList[curNavIndex].id}}" hideMenu showSearch disabledSearch  bindselect="menuChange"/>
 <playbar/>
 <block wx:if="{{navList[curNavIndex].loading}}">
   <template is='loading' data="{{ text: '正在加载...', size: 'large' }}" />

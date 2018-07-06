@@ -1,0 +1,12 @@
+<!--components/search/index.wxml-->
+<template name="search">
+  <image src='../../assets/img/cm2_topbar_icn_search@2x.png' class='ico-search' />
+  <input placeholder="搜索歌曲、歌手、专辑" disabled="{{disabled}}" placeholder-class="input-placeholder" value='{{value}}' confirm-type="search" bindinput="oninput" bindconfirm="onconfirm" bindfocus="onfocus" bindblur="onblur" />
+  <image hidden="{{!value}}" src='../../assets/img/cm2_search_icn_dlt@2x.png' class='ico-clear' catchtap='onclear' />
+</template>
+<navigator wx:if="{{disabled}}" class='mu-search-bar' hover-class='none' url='/pages/search/index'>
+  <template is='search' data="{{disabled: true}}" />
+</navigator>
+<view wx:else class='mu-search-bar'>
+  <template is='search' data="{{disabled: false, value}}" />
+</view>

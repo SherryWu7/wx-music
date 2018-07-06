@@ -46,7 +46,7 @@
 .mu-search-bar {
   position: relative;
   height: 60rpx;
-  padding: 0 30rpx;
+  padding: 0 60rpx;
   margin: 0 20rpx;
   box-sizing: border-box;
   background-color: rgba(255, 255, 255, 0.3);
@@ -62,4 +62,21 @@
 .mu-search-bar input {
   height: 100%;
   color: #fff;
+}
+
+.ico-search, .ico-clear {
+  position: absolute;
+}
+
+.ico-search {
+  width: 28rpx;
+  height: 28rpx;
+  top: 16rpx;
+  left: 20rpx;
+}
+.ico-clear  {
+  width: 34rpx;
+  height: 34rpx;
+  top: 13rpx;
+  right: 20rpx;
 }

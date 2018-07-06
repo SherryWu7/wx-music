@@ -138,7 +138,7 @@ Page({
       curTypeIndex,
     } = this.data;
     let current = searchType[curTypeIndex];
-    if (value && value !== this.data.searchValue) { // 两次搜索不是同一个关键词，清空result
+    if (value && value !== this.data.searchValue) { // 两次搜索不是同一个关键词，清空所有result
       current.result = [];
     }
     this.setData({
@@ -238,7 +238,7 @@ Page({
   },
   searchTypeChange: function(e) {
     this.setData({
-      curTypeIndex: parseInt(e.currentTarget.dataset.index)
+      curTypeIndex: parseInt(e.detail.index)
     }, () => {
       this.search();
     });

@@ -3,25 +3,25 @@
 <import src="../template/loading.wxml" />
 <import src="../template/highlight.wxml" />
 <view>
-  <view class="input-cover">
-    <!-- <i class=""/> -->
-    <input placeholder="搜索歌曲、歌手、专辑" value='{{searchValue}}' confirm-type="search" bindinput="inputValueChange" bindconfirm="search" bindfocus="inputFocus" bindblur="inputBlur" />
-  </view>
-  <view>
-    <view class='sr-hotlist' wx:if="{{hotList.length && !searchValue&& !isShowResult}}">
+  <menu datasource="{{searchType}}" selectedId="{{searchType[curTypeIndex].id}}" showSearch hideMenu="{{!isShowResult}}" bindselect="searchTypeChange" searchValue="{{searchValue}}" bindinput="inputValueChange" bindconfirm="search" bindfocus="inputFocus"
+    bindblur="inputBlur" />
+  <view wx:if="{{!searchValue && !isShowResult}}">
+    <view class='sr-hotlist' wx:if="{{hotList.length}}">
       <text class='title'>热门搜索</text>
       <view class='hot-list'>
         <view wx:for="{{hotList}}" wx:key="{{index}}" data-name="{{item.first}}" bindtap='searchValueChange' class='hot-item'>{{item.first}}</view>
       </view>
     </view>
-    <view class='sr-history' wx:if="{{historyList.length && !searchValue&& !isShowResult}}">
+    <view class='sr-history' wx:if="{{historyList.length}}">
       <view wx:for="{{historyList}}" wx:key="{{index}}" data-name="{{item}}" bindtap='searchValueChange' class='h-item'>
         <image src='../../assets/img/cm2_list_search_time@2x.png' style='width: 32rpx; height: 32rpx;' />
         <text class='ellipsis'>{{item}}</text>
         <image data-name="{{item}}" catchtap='delHistory' src='../../assets/img/cm2_list_search_dlt@2x.png' style='width: 24rpx; height: 24rpx;' />
       </view>
     </view>
-    <view class='sr-recom' wx:if="{{searchValue && !isShowResult}}">
+  </view>
+  <view wx:if="{{searchValue && !isShowResult}}">
+    <view class='sr-recom' wx:if="{{!isShowResult}}">
       <text class='title ellipsis'>搜索“{{searchValue}}”</text>
       <view>
         <view class='re-item' wx:for="{{recomList}}" wx:key="{{index}}" data-name="{{item.keyword}}" bindtap='searchValueChange'>
@@ -30,178 +30,171 @@
         </view>
       </view>
     </view>
-    <view class='sr-search-result' wx:if="{{isShowResult}}">
-      <scroll-view scroll-x class='res-type'>
-        <block wx:for="{{searchType}}" wx:key="{{item.id}}">
-          <view data-index="{{index}}" class="t-item {{searchType[curTypeIndex].id === item.id ? 'current' : ''}}" bindtap='searchTypeChange'>{{item.name}}</view>
+  </view>
+  <view class='sr-search-result' wx:if="{{isShowResult}}">
+    <view class='sr-res-notfound' wx:if="{{!searchType[curTypeIndex].result.length && searchType[curTypeIndex].lastPage }}">无结果</view>
+    <view>
+      <view hidden="{{ searchType[curTypeIndex].id !== 1 }}">
+        <block wx:for="{{searchType[0].result}}" wx:key="{{index}}">
+          <navigator class='res-item'>
+            <view class='res-item-bd line'>
+              <view class='item-info'>
+                <view class='item-title ellipsis'>
+                  <template is='highlight' data="{{str:item.name, key: searchValue }}" />
+                </view>
+                <view class='item-desc ellipsis'>
+                  <block wx:for="{{item.artists || []}}" wx:for-item="ar" wx:for-index="arIdx" wx:key="{{arIdx}}">
+                    <template is='highlight' data="{{str:ar.name, key: searchValue }}" />
+                    <block wx:if="{{arIdx!=(item.artists.length-1)}}">/</block>
+                  </block>
+                  -
+                  <template is='highlight' data="{{str:item.album.name, key: searchValue }}" />
+                </view>
+              </view>
+              <view class='item-actions'>
+                <block wx:if="{{item.mv}}">
+                  <navigator class='sgmv'>
+                    <image src='../../assets/img/cm4_list_tag_mv@2x.png' />
+                  </navigator>
+                </block>
+                <view class='sgmore'>
+                  <image src='../../assets/img/cm4_list_icn_more@2x.png' />
+                </view>
+              </view>
+            </view>
+          </navigator>
         </block>
-      </scroll-view>
-      <!-- <view wx:if="!loading && !searchType[0].result.length">
-        无结果
-      </view> -->
-      <view>
-        <view hidden="{{ searchType[curTypeIndex].id !== 1 }}">
-          <block wx:for="{{searchType[0].result}}" wx:key="{{index}}">
-            <navigator class='res-item'>
-              <view class='res-item-bd line'>
-                <view class='item-info'>
-                  <view class='item-title ellipsis'>
+      </view>
+      <view hidden="{{ searchType[curTypeIndex].id !== 1014 }}">
+        <block wx:for="{{searchType[1].result}}" wx:key="{{index}}">
+          <navigator class='res-item'>
+            <view class='res-item-bd'>
+              <view class='res-cover mv-cover'>
+                <image src='{{item.coverUrl}}' class='pic-108' />
+              </view>
+              <view class='flex-align-center flex-1'>
+                <view class='item-info item-info-large line'>
+                  <view class='item-title'>
+                    <template is='highlight' data="{{str:item.title, key: searchValue }}" />
+                  </view>
+                  <view class='item-desc ellipsis'>
+                    {{util.formatTime(item.durationms)}}，by {{item.creator[0].userName}}
+                  </view>
+                </view>
+              </view>
+            </view>
+          </navigator>
+        </block>
+      </view>
+      <view hidden="{{ searchType[curTypeIndex].id !== 100 }}">
+        <block wx:for="{{searchType[2].result}}" wx:key="{{index}}">
+          <navigator class='res-item'>
+            <view class='res-item-bd'>
+              <view class='res-cover'>
+                <image src='{{item.img1v1Url}}' class='pic-108' />
+              </view>
+              <view class='flex-align-center item-info item-info-large line'>
+                <view class='item-title ellipsis'>
+                  {{item.name}}
+                  <text class='item-tail' wx:if="{{item.alia}}">({{util.arrayToString(item.alia, '/')}})</text>
+                </view>
+                <view class='item-actions art-enter' wx:if="{{item.accountId}}">
+                  <image src='../../assets/img/cm2_icn_enter@2x.png'></image>
+                  已入驻
+                </view>
+              </view>
+            </view>
+          </navigator>
+        </block>
+      </view>
+      <view hidden="{{ searchType[curTypeIndex].id !== 10 }}">
+        <block wx:for="{{searchType[3].result}}" wx:key="{{index}}">
+          <navigator class='res-item'>
+            <view class='res-item-bd'>
+              <view class='res-cover album-cover'>
+                <image src='{{item.blurPicUrl}}' class='pic-108 pic-cover' />
+                <image class='album-cover-bg' src='../../assets/img/cm2_list_cover_alb@2x.png' />
+              </view>
+              <view class='flex-align-center flex-1'>
+                <view class='item-info item-info-large line'>
+                  <view class='item-title ellipsis' style='margin-top: 18rpx;'>
+                    <template is='highlight' data="{{str:item.name, key: searchValue }}" />
+                    <view class='item-tail' wx:if="{{item.transNames || item.alias.length}}">
+                      ({{util.arrayToString(item.transNames || item.alias, '/')}})
+                    </view>
+                  </view>
+                  <view class='item-desc ellipsis'>
+                    <template is='highlight' data="{{str:item.artist.name, key: searchValue }}" />
+                    <text wx:if="{{item.containedSong}}" style='margin-left: 15rpx;'>包含单曲: <template is='highlight' data="{{str:item.containedSong, key: searchValue }}" /></text>
+                    <text style='margin-left: 15rpx;' wx:else>{{item.publishTime}}</text>
+                  </view>
+                </view>
+              </view>
+            </view>
+          </navigator>
+        </block>
+      </view>
+      <view hidden="{{ searchType[curTypeIndex].id !== 1000 }}">
+        <block wx:for="{{searchType[4].result}}" wx:key="{{index}}">
+          <navigator class='res-item'>
+            <view class='res-item-bd'>
+              <view class='res-cover'>
+                <image src='{{item.coverImgUrl}}' class='pic-108' />
+              </view>
+              <view class='flex-align-center flex-1'>
+                <view class='item-info item-info-large line'>
+                  <view class='item-title ellipsis' style='margin-top: 18rpx;'>
                     <template is='highlight' data="{{str:item.name, key: searchValue }}" />
                   </view>
                   <view class='item-desc ellipsis'>
-                    <block wx:for="{{item.artists || []}}" wx:for-item="ar" wx:for-index="arIdx" wx:key="{{arIdx}}">
-                      <template is='highlight' data="{{str:ar.name, key: searchValue }}" />
-                      <block wx:if="{{arIdx!=(item.artists.length-1)}}">/</block>
-                    </block>
-                    -
-                    <template is='highlight' data="{{str:item.album.name, key: searchValue }}" />
-                  </view>
-                </view>
-                <view class='item-actions'>
-                  <block wx:if="{{item.mv}}">
-                    <navigator class='sgmv'>
-                      <image src='../../assets/img/cm4_list_tag_mv@2x.png' />
-                    </navigator>
-                  </block>
-                  <view class='sgmore'>
-                    <image src='../../assets/img/cm4_list_icn_more@2x.png' />
+                    {{item.trackCount}}首音乐 by {{item.creator.nickname}}，播放{{util.formatPlayCount(item.playCount)}}次
                   </view>
                 </view>
               </view>
-            </navigator>
-          </block>
-        </view>
-        <view hidden="{{ searchType[curTypeIndex].id !== 1014 }}">
-          <block wx:for="{{searchType[1].result}}" wx:key="{{index}}">
-            <navigator class='res-item'>
-              <view class='res-item-bd'>
-                <view class='res-cover mv-cover'>
-                  <image src='{{item.coverUrl}}' class='pic-108' />
-                </view>
-                <view class='flex-align-center flex-1'>
-                  <view class='item-info item-info-large line'>
-                    <view class='item-title'>
-                      <template is='highlight' data="{{str:item.title, key: searchValue }}" />
-                    </view>
-                    <view class='item-desc ellipsis'>
-                      {{util.formatTime(item.durationms)}}，by {{item.creator[0].userName}}
-                    </view>
+            </view>
+          </navigator>
+        </block>
+      </view>
+      <view hidden="{{ searchType[curTypeIndex].id !== 1009 }}">
+        <block wx:for="{{searchType[5].result}}" wx:key="{{index}}">
+          <navigator class='res-item'>
+            <view class='res-item-bd'>
+              <view class='res-cover'>
+                <image src='{{item.picUrl}}' class='pic-108' />
+              </view>
+              <view class='flex-align-center flex-1'>
+                <view class='item-info item-info-large line'>
+                  <view class='item-title ellipsis' style='margin-top: 18rpx;'>
+                    <template is='highlight' data="{{str:item.name, key: searchValue }}" />
+                  </view>
+                  <view class='item-desc ellipsis'>
+                    <template is='highlight' data="{{str:item.dj.name, key: searchValue }}" />
                   </view>
                 </view>
               </view>
-            </navigator>
-          </block>
-        </view>
-        <view hidden="{{ searchType[curTypeIndex].id !== 100 }}">
-          <block wx:for="{{searchType[2].result}}" wx:key="{{index}}">
-            <navigator class='res-item'>
-              <view class='res-item-bd'>
-                <view class='res-cover'>
-                  <image src='{{item.img1v1Url}}' class='pic-108' />
-                </view>
-                <view class='flex-align-center item-info item-info-large line'>
-                  <view class='item-title ellipsis'>
-                    {{item.name}}
-                    <text class='item-tail' wx:if="{{item.alia}}">({{util.arrayToString(item.alia, '/')}})</text>
-                  </view>
-                  <view class='item-actions art-enter' wx:if="{{item.accountId}}">
-                    <image src='../../assets/img/cm2_icn_enter@2x.png'></image>
-                    已入驻
+            </view>
+          </navigator>
+        </block>
+      </view>
+      <view hidden="{{ searchType[curTypeIndex].id !== 1002 }}">
+        <block wx:for="{{searchType[6].result}}" wx:key="{{index}}">
+          <navigator class='res-item'>
+            <view class='res-item-bd'>
+              <view class='res-cover'>
+                <image src='{{item.avatarUrl}}' class='pic-108' />
+              </view>
+              <view class='flex-align-center item-info item-info-large line'>
+                <view class='item-title ellipsis'>
+                  <template is='highlight' data="{{str:item.nickname, key: searchValue }}" />
+                  <view class='usr-gender' wx:if="{{item.gender}}">
+                    <image wx:if="{{item.gender === 1}}" src='../../assets/img/cm2_icn_boy@2x.png' />
+                    <image wx:if="{{item.gender === 2}}" src='../../assets/img/cm2_icn_girl@2x.png' />
                   </view>
                 </view>
               </view>
-            </navigator>
-          </block>
-        </view>
-        <view hidden="{{ searchType[curTypeIndex].id !== 10 }}">
-          <block wx:for="{{searchType[3].result}}" wx:key="{{index}}">
-            <navigator class='res-item'>
-              <view class='res-item-bd'>
-                <view class='res-cover album-cover'>
-                  <image src='{{item.blurPicUrl}}' class='pic-108 pic-cover' />
-                  <image class='album-cover-bg' src='../../assets/img/cm2_list_cover_alb@2x.png' />
-                </view>
-                <view class='flex-align-center flex-1'>
-                  <view class='item-info item-info-large line'>
-                    <view class='item-title ellipsis' style='margin-top: 18rpx;'>
-                      <template is='highlight' data="{{str:item.name, key: searchValue }}" />
-                      <view class='item-tail' wx:if="{{item.transNames || item.alias.length}}">
-                        ({{util.arrayToString(item.transNames || item.alias, '/')}})
-                      </view>
-                    </view>
-                    <view class='item-desc ellipsis'>
-                      <template is='highlight' data="{{str:item.artist.name, key: searchValue }}" />
-                      <text wx:if="{{item.containedSong}}" style='margin-left: 15rpx;'>包含单曲: <template is='highlight' data="{{str:item.containedSong, key: searchValue }}" /></text>
-                      <text style='margin-left: 15rpx;' wx:else>{{item.publishTime}}</text>
-                    </view>
-                  </view>
-                </view>
-              </view>
-            </navigator>
-          </block>
-        </view>
-        <view hidden="{{ searchType[curTypeIndex].id !== 1000 }}">
-          <block wx:for="{{searchType[4].result}}" wx:key="{{index}}">
-            <navigator class='res-item'>
-              <view class='res-item-bd'>
-                <view class='res-cover'>
-                  <image src='{{item.coverImgUrl}}' class='pic-108' />
-                </view>
-                <view class='flex-align-center flex-1'>
-                  <view class='item-info item-info-large line'>
-                    <view class='item-title ellipsis' style='margin-top: 18rpx;'>
-                      <template is='highlight' data="{{str:item.name, key: searchValue }}" />
-                    </view>
-                    <view class='item-desc ellipsis'>
-                      {{item.trackCount}}首音乐 by {{item.creator.nickname}}，播放{{util.formatPlayCount(item.playCount)}}次
-                    </view>
-                  </view>
-                </view>
-              </view>
-            </navigator>
-          </block>
-        </view>
-        <view hidden="{{ searchType[curTypeIndex].id !== 1009 }}">
-          <block wx:for="{{searchType[5].result}}" wx:key="{{index}}">
-            <navigator class='res-item'>
-              <view class='res-item-bd'>
-                <view class='res-cover'>
-                  <image src='{{item.picUrl}}' class='pic-108' />
-                </view>
-                <view class='flex-align-center flex-1'>
-                  <view class='item-info item-info-large line'>
-                    <view class='item-title ellipsis' style='margin-top: 18rpx;'>
-                      <template is='highlight' data="{{str:item.name, key: searchValue }}" />
-                    </view>
-                    <view class='item-desc ellipsis'>
-                      <template is='highlight' data="{{str:item.dj.name, key: searchValue }}" />
-                    </view>
-                  </view>
-                </view>
-              </view>
-            </navigator>
-          </block>
-        </view>
-        <view hidden="{{ searchType[curTypeIndex].id !== 1002 }}">
-          <block wx:for="{{searchType[6].result}}" wx:key="{{index}}">
-            <navigator class='res-item'>
-              <view class='res-item-bd'>
-                <view class='res-cover'>
-                  <image src='{{item.avatarUrl}}' class='pic-108' />
-                </view>
-                <view class='flex-align-center item-info item-info-large line'>
-                  <view class='item-title ellipsis'>
-                    <template is='highlight' data="{{str:item.nickname, key: searchValue }}" />
-                    <view class='usr-gender' wx:if="{{item.gender}}">
-                      <image wx:if="{{item.gender === 1}}" src='../../assets/img/cm2_icn_boy@2x.png' />
-                      <image wx:if="{{item.gender === 2}}" src='../../assets/img/cm2_icn_girl@2x.png' />
-                    </view>
-                  </view>
-                </view>
-              </view>
-            </navigator>
-          </block>
-        </view>
+            </view>
+          </navigator>
+        </block>
       </view>
     </view>
   </view>

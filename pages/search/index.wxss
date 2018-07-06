@@ -1,18 +1,40 @@
 /* pages/search/index.wxss */
-
-.input-cover {
+.mu-search-bar {
   position: relative;
-  width: 100%;
   height: 60rpx;
-  padding: 0 30rpx;
+  padding: 0 60rpx;
+  margin: 0 20rpx;
   box-sizing: border-box;
-  background: #ebecec;
+  background-color: rgba(255, 255, 255, 0.3);
   border-radius: 60rpx;
   font-size: 28rpx;
 }
 
-.input-cover input {
+.input-placeholder {
+  color: rgba(255, 255, 255, 0.5);
+  font-weight: 300;
+}
+
+.mu-search-bar input {
   height: 100%;
+  color: #fff;
+}
+
+.ico-search, .ico-clear {
+  position: absolute;
+}
+
+.ico-search {
+  width: 28rpx;
+  height: 28rpx;
+  top: 16rpx;
+  left: 20rpx;
+}
+.ico-clear  {
+  width: 34rpx;
+  height: 34rpx;
+  top: 13rpx;
+  right: 20rpx;
 }
 
 .sr-hotlist .title {
@@ -80,221 +102,14 @@
   border-bottom: 2rpx solid #eee;
 }
 
-.res-type {
-  width: 100%;
-  background-color: #d43c33;
-  white-space: nowrap;
-}
-
-.res-type .t-item {
-  height: 70rpx;
-  line-height: 70rpx;
-  display: inline-block;
-  margin: 0 58rpx;
-  font-size: 26rpx;
-  font-weight: 300;
-  color: #fff;
-}
-
-.res-type .t-item.current {
-  position: relative;
-  display: inline-block;
-  font-weight: 500;
-}
-
-.res-type .t-item.current::after {
-  content: '';
-  display: block;
-  width: 100%;
-  position: absolute;
-  left: 50%;
-  bottom: 10rpx;
-  transform: translateX(-50%);
-  border-top: 6rpx solid #fff;
-  border-radius: 10rpx;
-}
-
-.sr-search-result .res-item {
-  padding-left: 20rpx;
-}
-
-.res-item .item-bd {
-  display: flex;
-  align-items: center;
-  border-bottom: 2rpx solid #eee;
-}
-
-.res-item .bd-fl {
-  width: 0;
-  flex: 1 1 auto;
-  padding: 10rpx 0;
-}
-
-.res-item .bd-fr {
-  display: flex;
-  align-items: center;
-  padding: 0 20rpx;
-}
-
-.res-item .sgtl {
-  font-size: 34rpx;
-}
-
-.highlight {
-  color: #507daf;
-}
-
-.res-item .sginfo {
-  font-size: 24rpx;
-  color: #888;
-}
-
-.sgmv, .sgmv image, .sgmore, .sgmore image {
-  width: 56rpx;
-  height: 56rpx;
-}
-
-.art-item, .art-bd, .art-info {
-  display: flex;
-  align-items: center;
-}
-
-.art-bd {
-  flex: 1;
-  padding: 7rpx 0 7rpx 14rpx;
-  position: relative;
-}
-
-.art-bd::after {
-  content: '';
-  position: absolute;
-  width: 100%;
-  height: 2rpx;
-  background-color: #eee;
-  left: 134rpx;
-  bottom: 0;
-}
-
-.art-pic, .art-pic image {
-  width: 100rpx;
-  height: 100rpx;
-  border-radius: 8rpx;
-}
-
-.art-info {
-  flex: 1;
-  justify-content: space-between;
-  margin-left: 20rpx;
-}
-
-.art-info .art-name {
-  flex: 1;
-  font-size: 30rpx;
-}
-
-.art-info .art-name text {
-  color: #888;
-}
-
-.art-info .art-enter {
-  padding: 0 25rpx;
-  font-size: 24rpx;
-  font-weight: 300;
-  color: #888;
-}
-
-.art-enter image {
-  display: inline-block;
-  vertical-align: middle;
-  margin-top: -7rpx;
-  width: 30rpx;
-  height: 30rpx;
-}
-
-.mu-res-item, .mu-res-item-bd {
-  display: flex;
-  align-items: center;
-}
-
-.mu-res-item-bd {
-  flex: 1;
-}
-
-.mu-res-pic, .mu-res-pic image {
-  border-radius: 8rpx;
-}
-
-.mu-res-pic {
-  position: relative;
-}
-
-.pic-song-bg, .pic-song-bg image {
-  width: 128rpx;
-  height: 108rpx;
-}
-
-.pic-song {
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: 2;
-}
-
-.pic-song-bg {
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: 1;
-}
-
-.pic-108 {
-  width: 108rpx;
-  height: 108rpx;
-}
-
-.album-pic {
-  width: 128rpx;
-}
-
-.mu-res-info {
-  flex: 1;
-  justify-content: space-between;
-  width: 0;
-  height: 120rpx;
-  border-bottom: 2rpx solid #eee;
-}
-
-.mu-res-pic {
-  margin: 10rpx 20rpx;
-}
-
-.mu-res-title {
-  margin-top: 20rpx;
-  font-size: 30rpx;
-}
-
-.mu-res-title text {
-  display: inline-block;
-}
-
-.mu-res-title .title-tail {
-  display: inline-block;
-  color: #888;
-}
-
-.mu-res-desc {
-  font-size: 24rpx;
-  color: #888;
-}
-
-.mu-res-desc > text, .mu-res-desc > view {
-  display: inline-block;
-}
-
 /* 搜索结果 */
 
 .highlight {
   color: #507daf;
+}
+
+.sr-search-result .res-item {
+  padding-left: 20rpx;
 }
 
 .flex-align-center, .res-item, .res-item-bd {
@@ -414,6 +229,17 @@
   width: 198rpx;
 }
 
+.sgmv, .sgmv image, .sgmore, .sgmore image {
+  width: 56rpx;
+  height: 56rpx;
+}
+
 .flex-1 {
   flex: 1;
+}
+.sr-res-notfound {
+  padding: 60rpx 0;
+  text-align: center;
+  font-size: 28rpx;
+  color: #888;
 }
